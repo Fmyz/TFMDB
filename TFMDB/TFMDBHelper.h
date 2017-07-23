@@ -33,12 +33,19 @@
 
 @interface TFMDBHelper (Specifics)
 
-- (int)executeSelectRowCount:(NSString *)sql;
+///查询表列数
+- (int)executeSelectRowCountFromTable:(NSString *)tableName;
 
 ///给表增加一列 columnType:INTEGER,FLOAT,TEXT,...
 - (BOOL)executeAddColumn:(NSString *)columnName columnType:(NSString *)columnType tableName:(NSString *)tableName;
 
+///更换表名
+- (BOOL)executeRename:(NSString *)oldName newName:(NSString *)newName;
+
+///删除表
 - (BOOL)executeDropTable:(NSString *)tableName;
+
+///
 
 @end
 

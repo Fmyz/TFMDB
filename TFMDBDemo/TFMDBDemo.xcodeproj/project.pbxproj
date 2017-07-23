@@ -21,6 +21,9 @@
 		5A124E031F24FCDC00C4CECB /* TFMDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DFC1F24FCDC00C4CECB /* TFMDBHelper.m */; };
 		5A124E041F24FCDC00C4CECB /* TSQLCipherFMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DFE1F24FCDC00C4CECB /* TSQLCipherFMDatabase.m */; };
 		5A124E051F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124E001F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m */; };
+		5A124E091F2504AC00C4CECB /* TestDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124E081F2504AC00C4CECB /* TestDBHelper.m */; };
+		5A124E0C1F25087300C4CECB /* Student.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124E0B1F25087300C4CECB /* Student.m */; };
+		5A124E0F1F25088600C4CECB /* Classes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124E0E1F25088600C4CECB /* Classes.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +72,12 @@
 		5A124DFE1F24FCDC00C4CECB /* TSQLCipherFMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSQLCipherFMDatabase.m; sourceTree = "<group>"; };
 		5A124DFF1F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSQLCipherFMDatabaseQueue.h; sourceTree = "<group>"; };
 		5A124E001F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSQLCipherFMDatabaseQueue.m; sourceTree = "<group>"; };
+		5A124E071F2504AC00C4CECB /* TestDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDBHelper.h; sourceTree = "<group>"; };
+		5A124E081F2504AC00C4CECB /* TestDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDBHelper.m; sourceTree = "<group>"; };
+		5A124E0A1F25087300C4CECB /* Student.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Student.h; sourceTree = "<group>"; };
+		5A124E0B1F25087300C4CECB /* Student.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Student.m; sourceTree = "<group>"; };
+		5A124E0D1F25088600C4CECB /* Classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Classes.h; sourceTree = "<group>"; };
+		5A124E0E1F25088600C4CECB /* Classes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Classes.m; sourceTree = "<group>"; };
 		82FB2889DB0D2DF6D1D5994F /* Pods-TFMDBDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFMDBDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFMDBDemo/Pods-TFMDBDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +137,7 @@
 				5A124DC61F24FA2400C4CECB /* AppDelegate.m */,
 				5A124DC81F24FA2400C4CECB /* ViewController.h */,
 				5A124DC91F24FA2400C4CECB /* ViewController.m */,
+				5A124E061F25048200C4CECB /* simple */,
 				5A124DCB1F24FA2400C4CECB /* Main.storyboard */,
 				5A124DCE1F24FA2400C4CECB /* Assets.xcassets */,
 				5A124DD01F24FA2400C4CECB /* LaunchScreen.storyboard */,
@@ -187,6 +197,19 @@
 				5A124DF81F24FCDC00C4CECB /* NSObject+TDBModel.m */,
 			);
 			path = AutoModel;
+			sourceTree = "<group>";
+		};
+		5A124E061F25048200C4CECB /* simple */ = {
+			isa = PBXGroup;
+			children = (
+				5A124E071F2504AC00C4CECB /* TestDBHelper.h */,
+				5A124E081F2504AC00C4CECB /* TestDBHelper.m */,
+				5A124E0A1F25087300C4CECB /* Student.h */,
+				5A124E0B1F25087300C4CECB /* Student.m */,
+				5A124E0D1F25088600C4CECB /* Classes.h */,
+				5A124E0E1F25088600C4CECB /* Classes.m */,
+			);
+			name = simple;
 			sourceTree = "<group>";
 		};
 		CB4D3C0D9F0AD150ABB0C7E2 /* Pods */ = {
@@ -390,12 +413,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A124E091F2504AC00C4CECB /* TestDBHelper.m in Sources */,
 				5A124E011F24FCDC00C4CECB /* NSObject+TDBModel.m in Sources */,
 				5A124E041F24FCDC00C4CECB /* TSQLCipherFMDatabase.m in Sources */,
 				5A124E051F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m in Sources */,
+				5A124E0F1F25088600C4CECB /* Classes.m in Sources */,
 				5A124DCA1F24FA2400C4CECB /* ViewController.m in Sources */,
 				5A124DC71F24FA2400C4CECB /* AppDelegate.m in Sources */,
 				5A124E021F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.m in Sources */,
+				5A124E0C1F25087300C4CECB /* Student.m in Sources */,
 				5A124DC41F24FA2400C4CECB /* main.m in Sources */,
 				5A124E031F24FCDC00C4CECB /* TFMDBHelper.m in Sources */,
 			);

@@ -180,11 +180,13 @@
 
 @implementation TFMDBHelper (Specifics)
 
-- (int)executeSelectRowCount:(NSString *)sql
+- (int)executeSelectRowCountFromTable:(NSString *)tableName
 {
     if (![self isOpenDB]) {
         return 0;
     }
+    
+    NSString *sql = [NSString stringWithFormat:@"SELECT COUNT(1) FROM %@", tableName];
     
     __block int rowCount = 0;
     [self.dbQueue inDatabase:^(FMDatabase *db) {
@@ -212,6 +214,22 @@
     }
     
     NSString *alterSql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD %@ %@", tableName, columnName, columnType];
+    BOOL suc =  [self executeUpdate:alterSql];
+    
+    return suc;
+}
+
+- (BOOL)executeRename:(NSString *)oldName newName:(NSString *)newName
+{
+    if (![self isOpenDB]) {
+        return NO;
+    }
+    BOOL exists = [self existsTable:newName];
+    if (exists) {
+        return YES;
+    }
+    
+    NSString *alterSql = [NSString stringWithFormat:@"alter table %@ rename to %@", oldName, newName];
     BOOL suc =  [self executeUpdate:alterSql];
     
     return suc;

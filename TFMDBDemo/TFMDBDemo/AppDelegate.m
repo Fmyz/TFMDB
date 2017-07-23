@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "TestDBHelper.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    /*you can open DB after login */
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *directory = [paths firstObject];
+    
+    NSString *dbPath = [directory stringByAppendingPathComponent:@"test.db"];
+    NSString *password = nil;//@"YourPassword";
+    
+    BOOL suc = [[TestDBHelper helperInstance] openDB:dbPath password:password];
+    NSLog(@"openDB suc: %d", suc);
+    
+    
     return YES;
 }
 
