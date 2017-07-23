@@ -1,0 +1,659 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4D4C76C2AC508EB3389DEA66 /* libPods-TFMDBDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B9D95BD9CFF5DDE78F16156 /* libPods-TFMDBDemo.a */; };
+		5A124DC41F24FA2400C4CECB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DC31F24FA2400C4CECB /* main.m */; };
+		5A124DC71F24FA2400C4CECB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DC61F24FA2400C4CECB /* AppDelegate.m */; };
+		5A124DCA1F24FA2400C4CECB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DC91F24FA2400C4CECB /* ViewController.m */; };
+		5A124DCD1F24FA2400C4CECB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A124DCB1F24FA2400C4CECB /* Main.storyboard */; };
+		5A124DCF1F24FA2400C4CECB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A124DCE1F24FA2400C4CECB /* Assets.xcassets */; };
+		5A124DD21F24FA2400C4CECB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A124DD01F24FA2400C4CECB /* LaunchScreen.storyboard */; };
+		5A124DDD1F24FA2400C4CECB /* TFMDBDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DDC1F24FA2400C4CECB /* TFMDBDemoTests.m */; };
+		5A124DE81F24FA2400C4CECB /* TFMDBDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DE71F24FA2400C4CECB /* TFMDBDemoUITests.m */; };
+		5A124E011F24FCDC00C4CECB /* NSObject+TDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DF81F24FCDC00C4CECB /* NSObject+TDBModel.m */; };
+		5A124E021F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DFA1F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.m */; };
+		5A124E031F24FCDC00C4CECB /* TFMDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DFC1F24FCDC00C4CECB /* TFMDBHelper.m */; };
+		5A124E041F24FCDC00C4CECB /* TSQLCipherFMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DFE1F24FCDC00C4CECB /* TSQLCipherFMDatabase.m */; };
+		5A124E051F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124E001F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5A124DD91F24FA2400C4CECB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A124DB71F24FA2400C4CECB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5A124DBE1F24FA2400C4CECB;
+			remoteInfo = TFMDBDemo;
+		};
+		5A124DE41F24FA2400C4CECB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A124DB71F24FA2400C4CECB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5A124DBE1F24FA2400C4CECB;
+			remoteInfo = TFMDBDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0B9D95BD9CFF5DDE78F16156 /* libPods-TFMDBDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TFMDBDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18AC1418E3028905FE57E0EA /* Pods-TFMDBDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFMDBDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TFMDBDemo/Pods-TFMDBDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		5A124DBF1F24FA2400C4CECB /* TFMDBDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFMDBDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A124DC31F24FA2400C4CECB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5A124DC51F24FA2400C4CECB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5A124DC61F24FA2400C4CECB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5A124DC81F24FA2400C4CECB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		5A124DC91F24FA2400C4CECB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5A124DCC1F24FA2400C4CECB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5A124DCE1F24FA2400C4CECB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5A124DD11F24FA2400C4CECB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5A124DD31F24FA2400C4CECB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A124DD81F24FA2400C4CECB /* TFMDBDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TFMDBDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A124DDC1F24FA2400C4CECB /* TFMDBDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFMDBDemoTests.m; sourceTree = "<group>"; };
+		5A124DDE1F24FA2400C4CECB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A124DE31F24FA2400C4CECB /* TFMDBDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TFMDBDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A124DE71F24FA2400C4CECB /* TFMDBDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFMDBDemoUITests.m; sourceTree = "<group>"; };
+		5A124DE91F24FA2400C4CECB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A124DF71F24FCDC00C4CECB /* NSObject+TDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TDBModel.h"; sourceTree = "<group>"; };
+		5A124DF81F24FCDC00C4CECB /* NSObject+TDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TDBModel.m"; sourceTree = "<group>"; };
+		5A124DF91F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TFMDBHelper+SQLCipher.h"; sourceTree = "<group>"; };
+		5A124DFA1F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TFMDBHelper+SQLCipher.m"; sourceTree = "<group>"; };
+		5A124DFB1F24FCDC00C4CECB /* TFMDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFMDBHelper.h; sourceTree = "<group>"; };
+		5A124DFC1F24FCDC00C4CECB /* TFMDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFMDBHelper.m; sourceTree = "<group>"; };
+		5A124DFD1F24FCDC00C4CECB /* TSQLCipherFMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSQLCipherFMDatabase.h; sourceTree = "<group>"; };
+		5A124DFE1F24FCDC00C4CECB /* TSQLCipherFMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSQLCipherFMDatabase.m; sourceTree = "<group>"; };
+		5A124DFF1F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSQLCipherFMDatabaseQueue.h; sourceTree = "<group>"; };
+		5A124E001F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSQLCipherFMDatabaseQueue.m; sourceTree = "<group>"; };
+		82FB2889DB0D2DF6D1D5994F /* Pods-TFMDBDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFMDBDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFMDBDemo/Pods-TFMDBDemo.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5A124DBC1F24FA2400C4CECB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D4C76C2AC508EB3389DEA66 /* libPods-TFMDBDemo.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5A124DD51F24FA2400C4CECB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5A124DE01F24FA2400C4CECB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5A124DB61F24FA2400C4CECB = {
+			isa = PBXGroup;
+			children = (
+				5A124DC11F24FA2400C4CECB /* TFMDBDemo */,
+				5A124DDB1F24FA2400C4CECB /* TFMDBDemoTests */,
+				5A124DE61F24FA2400C4CECB /* TFMDBDemoUITests */,
+				5A124DC01F24FA2400C4CECB /* Products */,
+				CB4D3C0D9F0AD150ABB0C7E2 /* Pods */,
+				EBB243EB16903D1CD418BEC6 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		5A124DC01F24FA2400C4CECB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5A124DBF1F24FA2400C4CECB /* TFMDBDemo.app */,
+				5A124DD81F24FA2400C4CECB /* TFMDBDemoTests.xctest */,
+				5A124DE31F24FA2400C4CECB /* TFMDBDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5A124DC11F24FA2400C4CECB /* TFMDBDemo */ = {
+			isa = PBXGroup;
+			children = (
+				5A124DF51F24FCDC00C4CECB /* TFMDB */,
+				5A124DC51F24FA2400C4CECB /* AppDelegate.h */,
+				5A124DC61F24FA2400C4CECB /* AppDelegate.m */,
+				5A124DC81F24FA2400C4CECB /* ViewController.h */,
+				5A124DC91F24FA2400C4CECB /* ViewController.m */,
+				5A124DCB1F24FA2400C4CECB /* Main.storyboard */,
+				5A124DCE1F24FA2400C4CECB /* Assets.xcassets */,
+				5A124DD01F24FA2400C4CECB /* LaunchScreen.storyboard */,
+				5A124DD31F24FA2400C4CECB /* Info.plist */,
+				5A124DC21F24FA2400C4CECB /* Supporting Files */,
+			);
+			path = TFMDBDemo;
+			sourceTree = "<group>";
+		};
+		5A124DC21F24FA2400C4CECB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5A124DC31F24FA2400C4CECB /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5A124DDB1F24FA2400C4CECB /* TFMDBDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				5A124DDC1F24FA2400C4CECB /* TFMDBDemoTests.m */,
+				5A124DDE1F24FA2400C4CECB /* Info.plist */,
+			);
+			path = TFMDBDemoTests;
+			sourceTree = "<group>";
+		};
+		5A124DE61F24FA2400C4CECB /* TFMDBDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5A124DE71F24FA2400C4CECB /* TFMDBDemoUITests.m */,
+				5A124DE91F24FA2400C4CECB /* Info.plist */,
+			);
+			path = TFMDBDemoUITests;
+			sourceTree = "<group>";
+		};
+		5A124DF51F24FCDC00C4CECB /* TFMDB */ = {
+			isa = PBXGroup;
+			children = (
+				5A124DFB1F24FCDC00C4CECB /* TFMDBHelper.h */,
+				5A124DFC1F24FCDC00C4CECB /* TFMDBHelper.m */,
+				5A124DF91F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.h */,
+				5A124DFA1F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.m */,
+				5A124DFD1F24FCDC00C4CECB /* TSQLCipherFMDatabase.h */,
+				5A124DFE1F24FCDC00C4CECB /* TSQLCipherFMDatabase.m */,
+				5A124DFF1F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.h */,
+				5A124E001F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m */,
+				5A124DF61F24FCDC00C4CECB /* AutoModel */,
+			);
+			name = TFMDB;
+			path = ../../TFMDB;
+			sourceTree = "<group>";
+		};
+		5A124DF61F24FCDC00C4CECB /* AutoModel */ = {
+			isa = PBXGroup;
+			children = (
+				5A124DF71F24FCDC00C4CECB /* NSObject+TDBModel.h */,
+				5A124DF81F24FCDC00C4CECB /* NSObject+TDBModel.m */,
+			);
+			path = AutoModel;
+			sourceTree = "<group>";
+		};
+		CB4D3C0D9F0AD150ABB0C7E2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				18AC1418E3028905FE57E0EA /* Pods-TFMDBDemo.debug.xcconfig */,
+				82FB2889DB0D2DF6D1D5994F /* Pods-TFMDBDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		EBB243EB16903D1CD418BEC6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0B9D95BD9CFF5DDE78F16156 /* libPods-TFMDBDemo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5A124DBE1F24FA2400C4CECB /* TFMDBDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5A124DEC1F24FA2400C4CECB /* Build configuration list for PBXNativeTarget "TFMDBDemo" */;
+			buildPhases = (
+				CF99D74E2BCCECD95EA7ECCE /* [CP] Check Pods Manifest.lock */,
+				5A124DBB1F24FA2400C4CECB /* Sources */,
+				5A124DBC1F24FA2400C4CECB /* Frameworks */,
+				5A124DBD1F24FA2400C4CECB /* Resources */,
+				CD4CABA079F3F73AE73EC3B6 /* [CP] Embed Pods Frameworks */,
+				01EE5B2BBB3902A7F3A5CCC0 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TFMDBDemo;
+			productName = TFMDBDemo;
+			productReference = 5A124DBF1F24FA2400C4CECB /* TFMDBDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5A124DD71F24FA2400C4CECB /* TFMDBDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5A124DEF1F24FA2400C4CECB /* Build configuration list for PBXNativeTarget "TFMDBDemoTests" */;
+			buildPhases = (
+				5A124DD41F24FA2400C4CECB /* Sources */,
+				5A124DD51F24FA2400C4CECB /* Frameworks */,
+				5A124DD61F24FA2400C4CECB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5A124DDA1F24FA2400C4CECB /* PBXTargetDependency */,
+			);
+			name = TFMDBDemoTests;
+			productName = TFMDBDemoTests;
+			productReference = 5A124DD81F24FA2400C4CECB /* TFMDBDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5A124DE21F24FA2400C4CECB /* TFMDBDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5A124DF21F24FA2400C4CECB /* Build configuration list for PBXNativeTarget "TFMDBDemoUITests" */;
+			buildPhases = (
+				5A124DDF1F24FA2400C4CECB /* Sources */,
+				5A124DE01F24FA2400C4CECB /* Frameworks */,
+				5A124DE11F24FA2400C4CECB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5A124DE51F24FA2400C4CECB /* PBXTargetDependency */,
+			);
+			name = TFMDBDemoUITests;
+			productName = TFMDBDemoUITests;
+			productReference = 5A124DE31F24FA2400C4CECB /* TFMDBDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5A124DB71F24FA2400C4CECB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = Tan;
+				TargetAttributes = {
+					5A124DBE1F24FA2400C4CECB = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+					};
+					5A124DD71F24FA2400C4CECB = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5A124DBE1F24FA2400C4CECB;
+					};
+					5A124DE21F24FA2400C4CECB = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5A124DBE1F24FA2400C4CECB;
+					};
+				};
+			};
+			buildConfigurationList = 5A124DBA1F24FA2400C4CECB /* Build configuration list for PBXProject "TFMDBDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5A124DB61F24FA2400C4CECB;
+			productRefGroup = 5A124DC01F24FA2400C4CECB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5A124DBE1F24FA2400C4CECB /* TFMDBDemo */,
+				5A124DD71F24FA2400C4CECB /* TFMDBDemoTests */,
+				5A124DE21F24FA2400C4CECB /* TFMDBDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5A124DBD1F24FA2400C4CECB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5A124DD21F24FA2400C4CECB /* LaunchScreen.storyboard in Resources */,
+				5A124DCF1F24FA2400C4CECB /* Assets.xcassets in Resources */,
+				5A124DCD1F24FA2400C4CECB /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5A124DD61F24FA2400C4CECB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5A124DE11F24FA2400C4CECB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		01EE5B2BBB3902A7F3A5CCC0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TFMDBDemo/Pods-TFMDBDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CD4CABA079F3F73AE73EC3B6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TFMDBDemo/Pods-TFMDBDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF99D74E2BCCECD95EA7ECCE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5A124DBB1F24FA2400C4CECB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5A124E011F24FCDC00C4CECB /* NSObject+TDBModel.m in Sources */,
+				5A124E041F24FCDC00C4CECB /* TSQLCipherFMDatabase.m in Sources */,
+				5A124E051F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m in Sources */,
+				5A124DCA1F24FA2400C4CECB /* ViewController.m in Sources */,
+				5A124DC71F24FA2400C4CECB /* AppDelegate.m in Sources */,
+				5A124E021F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.m in Sources */,
+				5A124DC41F24FA2400C4CECB /* main.m in Sources */,
+				5A124E031F24FCDC00C4CECB /* TFMDBHelper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5A124DD41F24FA2400C4CECB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5A124DDD1F24FA2400C4CECB /* TFMDBDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5A124DDF1F24FA2400C4CECB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5A124DE81F24FA2400C4CECB /* TFMDBDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5A124DDA1F24FA2400C4CECB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5A124DBE1F24FA2400C4CECB /* TFMDBDemo */;
+			targetProxy = 5A124DD91F24FA2400C4CECB /* PBXContainerItemProxy */;
+		};
+		5A124DE51F24FA2400C4CECB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5A124DBE1F24FA2400C4CECB /* TFMDBDemo */;
+			targetProxy = 5A124DE41F24FA2400C4CECB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5A124DCB1F24FA2400C4CECB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5A124DCC1F24FA2400C4CECB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5A124DD01F24FA2400C4CECB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5A124DD11F24FA2400C4CECB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5A124DEA1F24FA2400C4CECB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5A124DEB1F24FA2400C4CECB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5A124DED1F24FA2400C4CECB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 18AC1418E3028905FE57E0EA /* Pods-TFMDBDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = TFMDBDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = XW.TFMDBDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5A124DEE1F24FA2400C4CECB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82FB2889DB0D2DF6D1D5994F /* Pods-TFMDBDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = TFMDBDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = XW.TFMDBDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5A124DF01F24FA2400C4CECB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TFMDBDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = XW.TFMDBDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TFMDBDemo.app/TFMDBDemo";
+			};
+			name = Debug;
+		};
+		5A124DF11F24FA2400C4CECB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TFMDBDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = XW.TFMDBDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TFMDBDemo.app/TFMDBDemo";
+			};
+			name = Release;
+		};
+		5A124DF31F24FA2400C4CECB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TFMDBDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = XW.TFMDBDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = TFMDBDemo;
+			};
+			name = Debug;
+		};
+		5A124DF41F24FA2400C4CECB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TFMDBDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = XW.TFMDBDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = TFMDBDemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5A124DBA1F24FA2400C4CECB /* Build configuration list for PBXProject "TFMDBDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5A124DEA1F24FA2400C4CECB /* Debug */,
+				5A124DEB1F24FA2400C4CECB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5A124DEC1F24FA2400C4CECB /* Build configuration list for PBXNativeTarget "TFMDBDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5A124DED1F24FA2400C4CECB /* Debug */,
+				5A124DEE1F24FA2400C4CECB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5A124DEF1F24FA2400C4CECB /* Build configuration list for PBXNativeTarget "TFMDBDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5A124DF01F24FA2400C4CECB /* Debug */,
+				5A124DF11F24FA2400C4CECB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5A124DF21F24FA2400C4CECB /* Build configuration list for PBXNativeTarget "TFMDBDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5A124DF31F24FA2400C4CECB /* Debug */,
+				5A124DF41F24FA2400C4CECB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5A124DB71F24FA2400C4CECB /* Project object */;
+}
