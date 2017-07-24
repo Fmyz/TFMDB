@@ -34,19 +34,45 @@ static NSMutableDictionary *autoIncrementPropertyNames_;
 
 + (BOOL)sqlCreateTable:(NSString *)tableName dbHelper:(TFMDBHelper *)dbHelper
 {
-    NSArray *allowedCodingPropertyNames = [self mj_totalAllowedPropertyNames];
-    NSArray *ignoredCodingPropertyNames = [self mj_totalIgnoredPropertyNames];
-    
     NSArray *primaryKeyPropertyNames = [self t_primaryKeyPropertyNames];
     NSArray *autoIncrementPropertyNames = [self t_autoIncrementPropertyNames];
     
-    [self mj_enumerateProperties:^(MJProperty *property, BOOL *stop) {
+    NSArray<MJProperty *> *propertys = [self getClassMJPropertys];
+    
+    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@", tableName];
+    for (NSInteger index = 0; index < propertys.count; index++) {
+        MJProperty *property = [propertys objectAtIndex:index];
         
-    }];
+        if (index == 0) {
+            sql = [sql stringByAppendingString:@"("];
+        }
+        
+        NSString *name = property.name;
+        
+        MJPropertyType *pType = property.type;
+//        NSString *type = property.type;
+        
+    }
     
     return YES;
 }
 
++ (NSArray *)getClassMJPropertys
+{
+    __block NSMutableArray<MJProperty *> *propertys = [NSMutableArray array];
+    
+    NSArray *allowedPropertyNames = [self mj_totalAllowedPropertyNames];
+    NSArray *ignoredPropertyNames = [self mj_totalIgnoredPropertyNames];
+    [self mj_enumerateProperties:^(MJProperty *property, BOOL *stop) {
+        // 检测是否被忽略
+        if (allowedPropertyNames.count && ![allowedPropertyNames containsObject:property.name]) return;
+        if ([ignoredPropertyNames containsObject:property.name]) return;
+        
+        [propertys addObject:property];
+    }];
+    
+    return [propertys copy];
+}
 
 #pragma mark - 属性主键配置
 + (NSMutableArray *)t_primaryKeyPropertyNames

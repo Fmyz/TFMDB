@@ -136,7 +136,7 @@
     return success;
 }
 
-- (BOOL)executeTransaction:(NSArray *)sqls
+- (BOOL)executeTransaction:(NSArray *)sqls progress:(void (^)(NSInteger, NSInteger, NSString *))progress
 {
     if (![self isOpenDB]) {
         return NO;
@@ -145,7 +145,16 @@
     __block BOOL success;
     [self.dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         for (NSString *sql in sqls) {
-           success = [db executeUpdate:sql];
+            success = [db executeUpdate:sql];
+            
+            NSInteger index = [sqls indexOfObject:sql];
+            NSInteger count = sqls.count;
+            
+            NSString *errorMsg = success?nil:[NSString stringWithFormat:@"error at %ld/%ld, sql:%@", (long)index, (long)count, sql];
+            
+            if (progress) {
+                progress(index, count, errorMsg);
+            }
             
             if (!success) {
                 *rollback = YES;
@@ -213,8 +222,8 @@
         return YES;
     }
     
-    NSString *alterSql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD %@ %@", tableName, columnName, columnType];
-    BOOL suc =  [self executeUpdate:alterSql];
+    NSString *sql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN %@ %@", tableName, columnName, columnType];
+    BOOL suc =  [self executeUpdate:sql];
     
     return suc;
 }
@@ -229,9 +238,37 @@
         return YES;
     }
     
-    NSString *alterSql = [NSString stringWithFormat:@"alter table %@ rename to %@", oldName, newName];
-    BOOL suc =  [self executeUpdate:alterSql];
+    NSString *sql = [NSString stringWithFormat:@"alter table %@ rename to %@", oldName, newName];
+    BOOL suc =  [self executeUpdate:sql];
     
+    return suc;
+}
+
+- (BOOL)executeCreateIndex:(NSString *)indexName tableName:(NSString *)tableName columnNames:(NSArray *)columnNames unique:(BOOL)unique
+{
+    if (![self isOpenDB]) {
+        return NO;
+    }
+    
+    NSString *sql = @"CREATE";
+    
+    NSString *uniqueStr = unique?@"UNIQUE":nil;
+    if (uniqueStr) {
+        sql = [sql stringByAppendingFormat:@" %@", uniqueStr];
+    }
+    
+    sql = [sql stringByAppendingFormat:@" INDEX %@ ON %@", indexName, tableName];
+    
+    NSString *columnStr = nil;
+    if (columnNames.count) {
+        columnStr = [columnNames componentsJoinedByString:@","];
+    }
+    
+    if (columnStr && columnStr.length) {
+        sql = [sql stringByAppendingFormat:@" (%@)", columnStr];
+    }
+    
+    BOOL suc =  [self executeUpdate:sql];
     return suc;
 }
 
@@ -241,8 +278,8 @@
         return NO;
     }
     
-    NSString *dropTableSql = [NSString stringWithFormat:@"DROP TABLE IF EXISTS %@", tableName];
-    BOOL suc =  [self executeUpdate:dropTableSql];
+    NSString *sql = [NSString stringWithFormat:@"DROP TABLE IF EXISTS %@", tableName];
+    BOOL suc =  [self executeUpdate:sql];
 
     return suc;
 }

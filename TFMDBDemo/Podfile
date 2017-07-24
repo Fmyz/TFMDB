@@ -12,5 +12,6 @@ target 'TFMDBDemo' do
   # Pods for SecretValentine
 
 pod 'FMDB/SQLCipher', '~> 2.7.2'
+pod 'MJExtension', '~> 3.0.13'
 
 end

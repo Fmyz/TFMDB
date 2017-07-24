@@ -1,6 +1,7 @@
 PODS:
   - FMDB/SQLCipher (2.7.2):
     - SQLCipher
+  - MJExtension (3.0.13)
   - SQLCipher (3.4.1):
     - SQLCipher/standard (= 3.4.1)
   - SQLCipher/common (3.4.1)
@@ -9,11 +10,13 @@ PODS:
 
 DEPENDENCIES:
   - FMDB/SQLCipher (~> 2.7.2)
+  - MJExtension (~> 3.0.13)
 
 SPEC CHECKSUMS:
   FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
+  MJExtension: 5932755f451458eefa24239358817f8d291240c7
   SQLCipher: 43d12c0eb9c57fb438749618fc3ce0065509a559
 
-PODFILE CHECKSUM: f1fe5654a3145ebb66e4e306604e91a4f54d5418
+PODFILE CHECKSUM: 00e2f4cdb0dbfa062b6e18d6f344ce569a0a937b
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.2.1

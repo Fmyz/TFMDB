@@ -25,7 +25,7 @@
 ///在一个字符串中执行多语句
 - (BOOL)executeStatements:(NSString *)sql;
 ///插入较多的数据
-- (BOOL)executeTransaction:(NSArray *)sqls;
+- (BOOL)executeTransaction:(NSArray *)sqls progress:(void(^)(NSInteger curIndex, NSInteger totalCount, NSString *errorMsg))progress;
 
 - (void)executeQuery:(NSString *)sql complete:(void(^)(FMResultSet *rs))complete;
 
@@ -42,10 +42,11 @@
 ///更换表名
 - (BOOL)executeRename:(NSString *)oldName newName:(NSString *)newName;
 
+///创建索引
+- (BOOL)executeCreateIndex:(NSString *)indexName tableName:(NSString *)tableName columnNames:(NSArray *)columnNames unique:(BOOL)unique;
+
 ///删除表
 - (BOOL)executeDropTable:(NSString *)tableName;
-
-///
 
 @end
 
