@@ -294,12 +294,12 @@
         return nil;
     }
     
-    __block NSString *schema = nil;
+    __block NSString *schema = @"";
     [self.dbQueue inDatabase:^(FMDatabase *db) {
         FMResultSet *rs = [db getTableSchema:tableName];
         while ([rs next]) {
             NSString *name = [rs stringForColumn:@"name"];
-            schema = [NSString stringWithFormat:@"%@", name];
+            schema = [schema stringByAppendingFormat:@"%@, ", name];
         }
         [rs close];
     }];

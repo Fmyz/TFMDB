@@ -13,14 +13,14 @@
 
 + (BOOL)sqlCreateTable:(NSString *)tableName dbHelper:(TFMDBHelper *)dbHelper;
 
-- (BOOL)sqlInsertTable:(NSString *)tableName;
-- (BOOL)sqlReplaceTable:(NSString *)tableName;
-
-- (BOOL)sqlUpdateTable:(NSString *)tableName;
-;
-- (BOOL)sqlDeleteTable:(NSString *)tableName;
-
-- (BOOL)sqlDropTable:(NSString *)tableName;
+//- (BOOL)sqlInsertTable:(NSString *)tableName;
+//- (BOOL)sqlReplaceTable:(NSString *)tableName;
+//
+//- (BOOL)sqlUpdateTable:(NSString *)tableName;
+//
+//- (BOOL)sqlDeleteTable:(NSString *)tableName;
+//
+//- (BOOL)sqlDropTable:(NSString *)tableName;
 
 @end
 

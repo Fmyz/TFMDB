@@ -16,7 +16,6 @@
 		5A124DD21F24FA2400C4CECB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A124DD01F24FA2400C4CECB /* LaunchScreen.storyboard */; };
 		5A124DDD1F24FA2400C4CECB /* TFMDBDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DDC1F24FA2400C4CECB /* TFMDBDemoTests.m */; };
 		5A124DE81F24FA2400C4CECB /* TFMDBDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DE71F24FA2400C4CECB /* TFMDBDemoUITests.m */; };
-		5A124E011F24FCDC00C4CECB /* NSObject+TDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DF81F24FCDC00C4CECB /* NSObject+TDBModel.m */; };
 		5A124E021F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DFA1F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.m */; };
 		5A124E031F24FCDC00C4CECB /* TFMDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DFC1F24FCDC00C4CECB /* TFMDBHelper.m */; };
 		5A124E041F24FCDC00C4CECB /* TSQLCipherFMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124DFE1F24FCDC00C4CECB /* TSQLCipherFMDatabase.m */; };
@@ -62,8 +61,6 @@
 		5A124DE31F24FA2400C4CECB /* TFMDBDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TFMDBDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A124DE71F24FA2400C4CECB /* TFMDBDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFMDBDemoUITests.m; sourceTree = "<group>"; };
 		5A124DE91F24FA2400C4CECB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5A124DF71F24FCDC00C4CECB /* NSObject+TDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TDBModel.h"; sourceTree = "<group>"; };
-		5A124DF81F24FCDC00C4CECB /* NSObject+TDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TDBModel.m"; sourceTree = "<group>"; };
 		5A124DF91F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TFMDBHelper+SQLCipher.h"; sourceTree = "<group>"; };
 		5A124DFA1F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TFMDBHelper+SQLCipher.m"; sourceTree = "<group>"; };
 		5A124DFB1F24FCDC00C4CECB /* TFMDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFMDBHelper.h; sourceTree = "<group>"; };
@@ -184,19 +181,9 @@
 				5A124DFE1F24FCDC00C4CECB /* TSQLCipherFMDatabase.m */,
 				5A124DFF1F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.h */,
 				5A124E001F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m */,
-				5A124DF61F24FCDC00C4CECB /* AutoModel */,
 			);
 			name = TFMDB;
 			path = ../../TFMDB;
-			sourceTree = "<group>";
-		};
-		5A124DF61F24FCDC00C4CECB /* AutoModel */ = {
-			isa = PBXGroup;
-			children = (
-				5A124DF71F24FCDC00C4CECB /* NSObject+TDBModel.h */,
-				5A124DF81F24FCDC00C4CECB /* NSObject+TDBModel.m */,
-			);
-			path = AutoModel;
 			sourceTree = "<group>";
 		};
 		5A124E061F25048200C4CECB /* model */ = {
@@ -414,7 +401,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A124E091F2504AC00C4CECB /* TestDBHelper.m in Sources */,
-				5A124E011F24FCDC00C4CECB /* NSObject+TDBModel.m in Sources */,
 				5A124E041F24FCDC00C4CECB /* TSQLCipherFMDatabase.m in Sources */,
 				5A124E051F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m in Sources */,
 				5A124E0F1F25088600C4CECB /* Classes.m in Sources */,

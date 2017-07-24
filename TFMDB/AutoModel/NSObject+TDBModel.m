@@ -34,8 +34,8 @@ static NSMutableDictionary *autoIncrementPropertyNames_;
 
 + (BOOL)sqlCreateTable:(NSString *)tableName dbHelper:(TFMDBHelper *)dbHelper
 {
-    NSArray *primaryKeyPropertyNames = [self t_primaryKeyPropertyNames];
-    NSArray *autoIncrementPropertyNames = [self t_autoIncrementPropertyNames];
+//    NSArray *primaryKeyPropertyNames = [self t_primaryKeyPropertyNames];
+//    NSArray *autoIncrementPropertyNames = [self t_autoIncrementPropertyNames];
     
     NSArray<MJProperty *> *propertys = [self getClassMJPropertys];
     
@@ -49,9 +49,8 @@ static NSMutableDictionary *autoIncrementPropertyNames_;
         
         NSString *name = property.name;
         
-        MJPropertyType *pType = property.type;
-//        NSString *type = property.type;
-        
+        NSString *firstType = [[[[NSString stringWithUTF8String:property_getAttributes(property.property)] componentsSeparatedByString:@","] firstObject] substringFromIndex:1];
+
     }
     
     return YES;
