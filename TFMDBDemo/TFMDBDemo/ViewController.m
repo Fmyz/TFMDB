@@ -11,7 +11,7 @@
 #import "Student.h"
 #import "Classes.h"
 
-#import "NSObject+TDBModel.h"
+//#import "NSObject+TDBModel.h"
 
 @interface ViewController ()
 
@@ -68,7 +68,7 @@
 
 #pragma mark - Sql Model
 - (IBAction)ModelCreateTable:(id)sender {
-    [Student sqlCreateTable:@"student" dbHelper:_helper];
+//    [Student sqlCreateTable:@"student" dbHelper:_helper];
 }
 
 

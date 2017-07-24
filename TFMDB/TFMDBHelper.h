@@ -44,6 +44,8 @@
 
 ///创建索引
 - (BOOL)executeCreateIndex:(NSString *)indexName tableName:(NSString *)tableName columnNames:(NSArray *)columnNames unique:(BOOL)unique;
+///删除索引
+- (BOOL)executeDropIndex:(NSString *)indexName;
 
 ///删除表
 - (BOOL)executeDropTable:(NSString *)tableName;

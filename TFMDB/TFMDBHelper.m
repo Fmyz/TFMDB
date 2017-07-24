@@ -272,6 +272,19 @@
     return suc;
 }
 
+- (BOOL)executeDropIndex:(NSString *)indexName
+{
+    if (![self isOpenDB]) {
+        return NO;
+    }
+    
+    NSString *sql = [NSString stringWithFormat:@"DROP INDEX %@", indexName];
+    BOOL suc =  [self executeUpdate:sql];
+    
+    return suc;
+
+}
+
 - (BOOL)executeDropTable:(NSString *)tableName
 {
     if (![self isOpenDB]) {
