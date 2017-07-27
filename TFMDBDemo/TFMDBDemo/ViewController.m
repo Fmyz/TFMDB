@@ -10,7 +10,7 @@
 #import "TestDBHelper.h"
 #import "Student.h"
 #import "Classes.h"
-
+#import "MJExtension.h"
 #import "NSObject+TDBModel.h"
 
 @interface ViewController ()
@@ -25,6 +25,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     _helper = [TestDBHelper helperInstance];
+    
+    NSDictionary *Studentdict = @{@"sid":[NSNumber numberWithInteger:10], @"name":@"liu", @"age":[NSNumber numberWithInteger:18], @"score":[NSNumber numberWithFloat:132.f], @"cid":[NSNumber numberWithInteger:1701], @"good":[NSNumber numberWithBool:YES]};
+    Student *student = [Student mj_objectWithKeyValues:Studentdict];
+    
+    NSDictionary<NSNumber *, Student *> *studentDic = @{@(StudentTypeGood):student,@(StudentTypeWeak):student};
+    NSDictionary *Teacherdict = @{@"tid":[NSNumber numberWithInteger:101], @"name":@"liu", @"age":[NSNumber numberWithInteger:18], @"studentDic":studentDic};
+    Teacher *teacher = [Teacher mj_objectWithKeyValues:Teacherdict];
+    
+    NSArray<Teacher *> *teachers = @[teacher, teacher];
+    NSDictionary *Classesdict = @{@"cid":[NSNumber numberWithInteger:1701], @"number":[NSNumber numberWithInteger:18], @"teachers":teachers};
+    Classes *classes = [Classes mj_objectWithKeyValues:Classesdict];
+    
+    
+    
 }
 
 - (IBAction)CreateTable:(id)sender {
