@@ -15,5 +15,7 @@
 @property (assign, nonatomic) NSInteger age;    //年龄
 @property (assign, nonatomic) float score;      //分数
 @property (assign, nonatomic) NSInteger cid;    //班级id
+@property (assign, nonatomic) BOOL good;        //是否优秀
+
 
 @end

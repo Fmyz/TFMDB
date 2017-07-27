@@ -7,7 +7,30 @@
 //
 
 #import "Classes.h"
+#import "MJExtension.h"
+#import "NSObject+TDBModel.h"
+
+@interface Classes () <TDBModelDelegate>
+
+@end
 
 @implementation Classes
+
++ (NSDictionary *)mj_objectClassInArray
+{
+    return @{@"teachers":@"Teacher"};
+}
+
++ (NSString *)sql_tableName
+{
+    return @"classes";
+}
+
+@end
+
+
+@implementation Teacher
+
+
 
 @end

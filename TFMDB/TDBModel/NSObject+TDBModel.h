@@ -27,6 +27,9 @@
 @protocol TDBModelDelegate <NSObject>
 
 @optional
+
++ (NSString *)sql_tableName;
+
 + (NSArray *)sql_primaryKeyPropertyNames;
 + (NSArray *)sql_autoIncrementPropertyNames;
 
