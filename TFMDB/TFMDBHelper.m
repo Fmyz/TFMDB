@@ -307,14 +307,27 @@
         return nil;
     }
     
-    __block NSString *schema = @"";
+    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (", tableName];
+    __block NSString *schema = sql;
     [self.dbQueue inDatabase:^(FMDatabase *db) {
         FMResultSet *rs = [db getTableSchema:tableName];
+        
+        NSMutableArray *attrStrs = [NSMutableArray array];
         while ([rs next]) {
             NSString *name = [rs stringForColumn:@"name"];
-            schema = [schema stringByAppendingFormat:@"%@, ", name];
+            NSString *type = [rs stringForColumn:@"type"];
+            
+            NSArray *attrs = [NSArray arrayWithObjects:name, type, nil];
+            NSString *attrStr = [attrs componentsJoinedByString:@" "];
+            [attrStrs addObject:attrStr];
         }
         [rs close];
+        
+        if (attrStrs.count) {
+            NSString *columnStr = [attrStrs componentsJoinedByString:@", "];
+            schema = [schema stringByAppendingString:columnStr];
+            schema = [schema stringByAppendingString:@")"];
+        }
     }];
     return schema;
 }
