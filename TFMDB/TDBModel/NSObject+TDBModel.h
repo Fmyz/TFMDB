@@ -1,26 +1,17 @@
 //
 //  NSObject+TDBModel.h
-//  TCodeStudy
+//  TFMDBDemo
 //
-//  Created by Liu on 2017/7/23.
+//  Created by Fmyz on 2017/7/28.
 //  Copyright © 2017年 Tan. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@class TFMDBHelper;
 @interface NSObject (TDBModel)
 
-+ (BOOL)sqlCreateTable:(NSString *)tableName dbHelper:(TFMDBHelper *)dbHelper;
++ (NSString *)sqlForCreateTable:(NSString *)tableName;
 
-//- (BOOL)sqlInsertTable:(NSString *)tableName;
-//- (BOOL)sqlReplaceTable:(NSString *)tableName;
-//
-//- (BOOL)sqlUpdateTable:(NSString *)tableName;
-//
-//- (BOOL)sqlDeleteTable:(NSString *)tableName;
-//
-//- (BOOL)sqlDropTable:(NSString *)tableName;
 
 @end
 
@@ -28,9 +19,9 @@
 
 @optional
 
-+ (NSString *)sql_tableName;
++ (NSString *)t_dbModelTableName;
 
-+ (NSArray *)sql_primaryKeyPropertyNames;
-+ (NSArray *)sql_autoIncrementPropertyNames;
++ (NSArray *)t_dbModePrimaryKeyPropertyNames;
++ (NSArray *)t_dbModeAutoIncrementPropertyNames;
 
 @end

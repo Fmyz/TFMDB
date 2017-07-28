@@ -1,59 +1,80 @@
 //
 //  NSObject+TDBModel.m
-//  TCodeStudy
+//  TFMDBDemo
 //
-//  Created by Liu on 2017/7/23.
+//  Created by Fmyz on 2017/7/28.
 //  Copyright © 2017年 Tan. All rights reserved.
 //
 
 #import "NSObject+TDBModel.h"
-#import "TFMDBHelper.h"
 #import "TDBModelUtils.h"
 
 #import "MJExtension.h"
 
 @implementation NSObject (TDBModel)
 
-
-+ (BOOL)sqlCreateTable:(NSString *)tableName dbHelper:(TFMDBHelper *)dbHelper
++ (NSString *)sqlForCreateTable:(NSString *)tableName
 {
+    NSString *sql = nil;
     if (!tableName || !tableName.length) {
         tableName = [self t_tableName];
     }
-
+    
     if (!tableName || !tableName.length) {
-        return NO;
+        return nil;
     }
     
     NSArray<MJProperty *> *propertys = [self getClassMJPropertys];
     if (!propertys && !propertys.count) {
-        return NO;
+        return nil;
+    }
+    
+    NSArray<NSString *> *ivarNames = [self getClassIvarNames];
+    if (!ivarNames && !ivarNames.count) {
+        return nil;
     }
     
     NSArray *primaryKeyPropertyNames = [self t_primaryKeyPropertyNames];
     NSArray *autoIncrementPropertyNames = [self t_autoIncrementPropertyNames];
     
-    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@", tableName];
-    for (NSInteger index = 0; index < propertys.count; index++) {
+    sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (", tableName];
+    NSInteger count = MIN(propertys.count, ivarNames.count);
+    
+    NSMutableArray<NSString *> *columns = [NSMutableArray array];
+    for (NSInteger index = 0; index < count; index++) {
         MJProperty *property = [propertys objectAtIndex:index];
+        if (![ivarNames containsObject:property.name]) {
+            continue;
+        }
         
-        if (index == 0) {
-            sql = [sql stringByAppendingString:@"("];
+        NSString *sqlType = [self sqlTypeWithProperty:property];
+        if (!sqlType) {
+            continue;
         }
         
         NSString *name = property.name;
-        [self sqlTypeWithProperty:property];
+        NSString *column = [name stringByAppendingString:@" "];
+        column = [column stringByAppendingString:sqlType];
         
-        
-        if (index == propertys.count - 1) {
-            sql = [sql stringByAppendingString:@")"];
+        if ([primaryKeyPropertyNames containsObject:name]) {
+            column = [column stringByAppendingString:tSql_Attribute_PrimaryKey];
+            column = [column stringByAppendingString:@" "];
         }
         
+        if ([autoIncrementPropertyNames containsObject:name]) {
+            column = [column stringByAppendingString:tSql_Attribute_AutoIncrement];
+        }
+        
+        [columns addObject:column];
     }
     
-    BOOL suc = [dbHelper executeUpdate:sql];
+    if (columns.count) {
+        NSString *sqlColumn = [columns componentsJoinedByString:@", "];
+        sql = [sql stringByAppendingString:sqlColumn];
+    }
     
-    return suc;
+    sql = [sql stringByAppendingString:@")"];
+    return sql;
 }
 
 + (NSArray *)getClassMJPropertys
@@ -73,69 +94,50 @@
     return [propertys copy];
 }
 
++ (NSArray<NSString *> *)getClassIvarNames
+{
+    NSMutableArray<NSString *> *ivarNames = [NSMutableArray array];
+    
+    NSArray *allowedPropertyNames = [self mj_totalAllowedPropertyNames];
+    NSArray *ignoredPropertyNames = [self mj_totalIgnoredPropertyNames];
+    
+    unsigned int count;
+    Ivar *ivar = class_copyIvarList(self, &count);
+    for (int i=0; i<count; i++) {
+        Ivar iv = ivar[i];
+        const char *name = ivar_getName(iv);
+        NSString *ivarName = [NSString stringWithUTF8String:name];
+        NSString *propertyName = [self replaceFirstUnderline:ivarName];
+        if (allowedPropertyNames.count && ![allowedPropertyNames containsObject:propertyName]) continue;
+        if ([ignoredPropertyNames containsObject:propertyName]) continue;
+        
+        [ivarNames addObject:propertyName];
+    }
+    free(ivar);
+    
+    return [ivarNames copy];
+}
+
 + (NSString *)sqlTypeWithProperty:(MJProperty *)property
 {
     MJPropertyType *type = property.type;
-    Class propertyClass = type.typeClass;
-    
-    
-//    [arr mj_JSONString];
-    
     NSString *sqlType = nil;
     if (type.isBoolType) {
         sqlType = tSql_Type_Blob;
     } else if (type.isNumberType) {
-    
+        NSString *code = type.code;
+        if ([code isEqualToString:@"f"]) {
+            sqlType = tSql_Type_Float;
+        } else if ([code isEqualToString:@"d"]) {
+            sqlType = tSql_Type_Double;
+        } else if ([code isEqualToString:@"i"] || [code isEqualToString:@"s"]) {
+            sqlType = tSql_Type_Int;
+        } else if ([code isEqualToString:@"l"] || [code isEqualToString:@"q"] || [code isEqualToString:@"I"] || [code isEqualToString:@"Q"]) {
+            sqlType = tSql_Type_Integer;
+        }
+    } else if (type.isFromFoundation || type.isIdType) {
+        sqlType = tSql_Type_Text;
     }
-    
-    
-//
-//    if ([firstType isEqualToString:@"f"]) {
-//        NSNumber *number = [rs objectForColumnName:columnName];
-//        [model setValue:@(number.floatValue) forKey:propertyName];
-//        
-//    } else if([firstType isEqualToString:@"i"]){
-//        NSNumber *number = [rs objectForColumnName:columnName];
-//        [model setValue:@(number.intValue) forKey:propertyName];
-//        
-//    } else if([firstType isEqualToString:@"d"]){
-//        [model setValue:[rs objectForColumnName:columnName] forKey:propertyName];
-//        
-//    } else if([firstType isEqualToString:@"l"] || [firstType isEqualToString:@"q"]){
-//        [model setValue:[rs objectForColumnName:columnName] forKey:propertyName];
-//        
-//    } else if([firstType isEqualToString:@"c"] || [firstType isEqualToString:@"B"]){
-//        NSNumber *number = [rs objectForColumnName:columnName];
-//        [model setValue:@(number.boolValue) forKey:propertyName];
-//        
-//    } else if([firstType isEqualToString:@"s"]){
-//        NSNumber *number = [rs objectForColumnName:columnName];
-//        [model setValue:@(number.shortValue) forKey:propertyName];
-//        
-//    } else if([firstType isEqualToString:@"I"]){
-//        NSNumber *number = [rs objectForColumnName:columnName];
-//        [model setValue:@(number.integerValue) forKey:propertyName];
-//        
-//    } else if([firstType isEqualToString:@"Q"]){
-//        NSNumber *number = [rs objectForColumnName:columnName];
-//        [model setValue:@(number.unsignedIntegerValue) forKey:propertyName];
-//        
-//    } else if([firstType isEqualToString:@"@\"NSData\""]){
-//        NSData *value = [rs dataForColumn:columnName];
-//        [model setValue:value forKey:propertyName];
-//        
-//    } else if([firstType isEqualToString:@"@\"NSDate\""]){
-//        NSDate *value = [rs dateForColumn:columnName];
-//        [model setValue:value forKey:propertyName];
-//        
-//    } else if([firstType isEqualToString:@"@\"NSString\""]){
-//        NSString *value = [rs stringForColumn:columnName];
-//        [model setValue:value forKey:propertyName];
-//        
-//    } else {
-//        [model setValue:[rs objectForColumnName:columnName] forKey:propertyName];
-//    }
-//    
     return sqlType;
 }
 
@@ -143,8 +145,8 @@
 + (NSString *)t_tableName
 {
     NSString *t_tableName = nil;
-    if ([self respondsToSelector:@selector(sql_tableName)]) {
-        t_tableName = [self performSelector:@selector(sql_tableName)];
+    if ([self respondsToSelector:@selector(t_dbModelTableName)]) {
+        t_tableName = [self performSelector:@selector(t_dbModelTableName)];
     }
     return t_tableName;
 }
@@ -153,8 +155,8 @@
 + (NSArray *)t_primaryKeyPropertyNames
 {
     NSArray *t_primaryKeyPropertyNames = nil;
-    if ([self respondsToSelector:@selector(sql_primaryKeyPropertyNames)]) {
-        t_primaryKeyPropertyNames = [self performSelector:@selector(sql_primaryKeyPropertyNames)];
+    if ([self respondsToSelector:@selector(t_dbModePrimaryKeyPropertyNames)]) {
+        t_primaryKeyPropertyNames = [self performSelector:@selector(t_dbModePrimaryKeyPropertyNames)];
     }
     return t_primaryKeyPropertyNames;
 }
@@ -164,10 +166,24 @@
 + (NSArray *)t_autoIncrementPropertyNames
 {
     NSArray *t_autoIncrementPropertyNames = nil;
-    if ([self respondsToSelector:@selector(sql_autoIncrementPropertyNames)]) {
-        t_autoIncrementPropertyNames = [self performSelector:@selector(sql_autoIncrementPropertyNames)];
+    if ([self respondsToSelector:@selector(t_dbModeAutoIncrementPropertyNames)]) {
+        t_autoIncrementPropertyNames = [self performSelector:@selector(t_dbModeAutoIncrementPropertyNames)];
     }
     return t_autoIncrementPropertyNames;
+}
+
++ (NSString *)replaceFirstUnderline:(NSString *)ivarName
+{
+    // 若此变量未在类结构体中声明而只声明为Property，则变量名加前缀 '_'下划线
+    // 比如 @property(retain) NSString *abc;则 key == _abc;
+    NSString *propertyName = ivarName;
+    
+    NSString *firstStr = [ivarName substringToIndex:1];
+    if ([firstStr isEqualToString:@"_"]) {
+        propertyName = [ivarName stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@""];
+    }
+    
+    return propertyName;
 }
 
 @end

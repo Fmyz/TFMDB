@@ -21,7 +21,7 @@
     return @{@"teachers":@"Teacher"};
 }
 
-+ (NSString *)sql_tableName
++ (NSString *)t_dbModelTableName
 {
     return @"classes";
 }
@@ -31,6 +31,9 @@
 
 @implementation Teacher
 
-
++ (NSString *)t_dbModelTableName
+{
+    return @"teacher";
+}
 
 @end

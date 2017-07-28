@@ -11,7 +11,7 @@
 #import "Student.h"
 #import "Classes.h"
 #import "MJExtension.h"
-#import "NSObject+TDBModel.h"
+#import "TFMDBHelper+TDBModelExecute.h"
 
 @interface ViewController ()
 
@@ -26,18 +26,18 @@
     // Do any additional setup after loading the view, typically from a nib.
     _helper = [TestDBHelper helperInstance];
     
-    NSDictionary *Studentdict = @{@"sid":[NSNumber numberWithInteger:10], @"name":@"liu", @"age":[NSNumber numberWithInteger:18], @"score":[NSNumber numberWithFloat:132.f], @"cid":[NSNumber numberWithInteger:1701], @"good":[NSNumber numberWithBool:YES]};
-    Student *student = [Student mj_objectWithKeyValues:Studentdict];
-    
-    NSDictionary<NSNumber *, Student *> *studentDic = @{@(StudentTypeGood):student,@(StudentTypeWeak):student};
-    NSDictionary *Teacherdict = @{@"tid":[NSNumber numberWithInteger:101], @"name":@"liu", @"age":[NSNumber numberWithInteger:18], @"studentDic":studentDic};
-    Teacher *teacher = [Teacher mj_objectWithKeyValues:Teacherdict];
-    
-    NSArray<Teacher *> *teachers = @[teacher, teacher];
-    NSDictionary *Classesdict = @{@"cid":[NSNumber numberWithInteger:1701], @"number":[NSNumber numberWithInteger:18], @"teachers":teachers};
-    Classes *classes = [Classes mj_objectWithKeyValues:Classesdict];
-    
-    
+//    NSDictionary *Studentdict = @{@"sid":[NSNumber numberWithInteger:10], @"name":@"liu", @"age":[NSNumber numberWithInteger:18], @"score":[NSNumber numberWithFloat:132.f], @"cid":[NSNumber numberWithInteger:1701], @"good":[NSNumber numberWithBool:YES]};
+//    Student *student = [Student mj_objectWithKeyValues:Studentdict];
+//    
+//    NSDictionary<NSNumber *, Student *> *studentDic = @{@(StudentTypeGood):student,@(StudentTypeWeak):student};
+//    NSDictionary *Teacherdict = @{@"tid":[NSNumber numberWithInteger:101], @"name":@"liu", @"age":[NSNumber numberWithInteger:18], @"studentDic":studentDic};
+//    Teacher *teacher = [Teacher mj_objectWithKeyValues:Teacherdict];
+//    
+//    NSArray<Teacher *> *teachers = @[teacher, teacher];
+//    NSDictionary *Classesdict = @{@"cid":[NSNumber numberWithInteger:1701], @"number":[NSNumber numberWithInteger:18], @"teachers":teachers};
+//    Classes *classes = [Classes mj_objectWithKeyValues:Classesdict];
+//    
+//    
     
 }
 
@@ -70,7 +70,10 @@
 }
 - (IBAction)DropTable:(id)sender {
     BOOL suc = [_helper executeDropTable:@"student"];
-    NSLog(@"DropTable suc: %d", suc);
+    NSLog(@"DropTable student suc: %d", suc);
+    
+    suc = [_helper executeDropTable:@"classes"];
+    NSLog(@"DropTable classes suc: %d", suc);
 }
 - (IBAction)Schema:(id)sender {
     NSString *schema = [_helper getTableSchema:@"student"];
@@ -81,13 +84,18 @@
 }
 
 #pragma mark - Sql Model
-- (IBAction)ModelCreateTable:(id)sender {
-//    [Student sqlCreateTable:@"student" dbHelper:_helper];
-    
-    [Classes sqlCreateTable:nil dbHelper:_helper];
-    
+- (IBAction)StudentCreateTable:(id)sender {
+    BOOL suc = [_helper executeCreateTable:nil modelClass:[Student class]];
+    NSLog(@"StudentCreateTable suc: %d", suc);
 }
-
+- (IBAction)ClassesCreateTable:(id)sender {
+    BOOL suc = [_helper executeCreateTable:nil modelClass:[Classes class]];
+    NSLog(@"ClassesCreateTable suc: %d", suc);
+}
+- (IBAction)TeacherCreateTable:(id)sender {
+    BOOL suc = [_helper executeCreateTable:nil modelClass:[Teacher class]];
+    NSLog(@"TeacherCreateTable suc: %d", suc);
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

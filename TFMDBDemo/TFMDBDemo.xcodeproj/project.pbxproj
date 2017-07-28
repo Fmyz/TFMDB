@@ -23,7 +23,8 @@
 		5A124E091F2504AC00C4CECB /* TestDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124E081F2504AC00C4CECB /* TestDBHelper.m */; };
 		5A124E0C1F25087300C4CECB /* Student.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124E0B1F25087300C4CECB /* Student.m */; };
 		5A124E0F1F25088600C4CECB /* Classes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124E0E1F25088600C4CECB /* Classes.m */; };
-		68424E3A1F29C12900FF6213 /* NSObject+TDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 68424E381F29C12900FF6213 /* NSObject+TDBModel.m */; };
+		6834BC771F2B47D8003096AF /* NSObject+TDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6834BC761F2B47D8003096AF /* NSObject+TDBModel.m */; };
+		6834BC7A1F2B488E003096AF /* TFMDBHelper+TDBModelExecute.m in Sources */ = {isa = PBXBuildFile; fileRef = 6834BC791F2B488E003096AF /* TFMDBHelper+TDBModelExecute.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,8 +77,10 @@
 		5A124E0B1F25087300C4CECB /* Student.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Student.m; sourceTree = "<group>"; };
 		5A124E0D1F25088600C4CECB /* Classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Classes.h; sourceTree = "<group>"; };
 		5A124E0E1F25088600C4CECB /* Classes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Classes.m; sourceTree = "<group>"; };
-		68424E371F29C12900FF6213 /* NSObject+TDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TDBModel.h"; sourceTree = "<group>"; };
-		68424E381F29C12900FF6213 /* NSObject+TDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TDBModel.m"; sourceTree = "<group>"; };
+		6834BC751F2B47D8003096AF /* NSObject+TDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TDBModel.h"; sourceTree = "<group>"; };
+		6834BC761F2B47D8003096AF /* NSObject+TDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TDBModel.m"; sourceTree = "<group>"; };
+		6834BC781F2B488E003096AF /* TFMDBHelper+TDBModelExecute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TFMDBHelper+TDBModelExecute.h"; sourceTree = "<group>"; };
+		6834BC791F2B488E003096AF /* TFMDBHelper+TDBModelExecute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TFMDBHelper+TDBModelExecute.m"; sourceTree = "<group>"; };
 		68424E391F29C12900FF6213 /* TDBModelUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBModelUtils.h; sourceTree = "<group>"; };
 		82FB2889DB0D2DF6D1D5994F /* Pods-TFMDBDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFMDBDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFMDBDemo/Pods-TFMDBDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -207,8 +210,10 @@
 		68424E361F29C12900FF6213 /* TDBModel */ = {
 			isa = PBXGroup;
 			children = (
-				68424E371F29C12900FF6213 /* NSObject+TDBModel.h */,
-				68424E381F29C12900FF6213 /* NSObject+TDBModel.m */,
+				6834BC781F2B488E003096AF /* TFMDBHelper+TDBModelExecute.h */,
+				6834BC791F2B488E003096AF /* TFMDBHelper+TDBModelExecute.m */,
+				6834BC751F2B47D8003096AF /* NSObject+TDBModel.h */,
+				6834BC761F2B47D8003096AF /* NSObject+TDBModel.m */,
 				68424E391F29C12900FF6213 /* TDBModelUtils.h */,
 			);
 			path = TDBModel;
@@ -418,13 +423,14 @@
 				5A124E091F2504AC00C4CECB /* TestDBHelper.m in Sources */,
 				5A124E041F24FCDC00C4CECB /* TSQLCipherFMDatabase.m in Sources */,
 				5A124E051F24FCDC00C4CECB /* TSQLCipherFMDatabaseQueue.m in Sources */,
+				6834BC771F2B47D8003096AF /* NSObject+TDBModel.m in Sources */,
 				5A124E0F1F25088600C4CECB /* Classes.m in Sources */,
+				6834BC7A1F2B488E003096AF /* TFMDBHelper+TDBModelExecute.m in Sources */,
 				5A124DCA1F24FA2400C4CECB /* ViewController.m in Sources */,
 				5A124DC71F24FA2400C4CECB /* AppDelegate.m in Sources */,
 				5A124E021F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.m in Sources */,
 				5A124E0C1F25087300C4CECB /* Student.m in Sources */,
 				5A124DC41F24FA2400C4CECB /* main.m in Sources */,
-				68424E3A1F29C12900FF6213 /* NSObject+TDBModel.m in Sources */,
 				5A124E031F24FCDC00C4CECB /* TFMDBHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

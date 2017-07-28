@@ -19,6 +19,7 @@ static NSString *const tSql_Type_Blob = @"BLOB";
 static NSString *const tSql_Attribute_NotNull = @"NOT NULL";
 static NSString *const tSql_Attribute_PrimaryKey = @"PRIMARY KEY";
 static NSString *const tSql_Attribute_Default = @"DEFAULT";
+static NSString *const tSql_Attribute_AutoIncrement = @"AUTOINCREMENT";
 static NSString *const tSql_Attribute_Unique = @"UNIQUE";
 
 #endif /* TDBModelUtils_h */

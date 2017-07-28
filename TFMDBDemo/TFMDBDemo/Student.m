@@ -7,7 +7,13 @@
 //
 
 #import "Student.h"
+#import "NSObject+TDBModel.h"
 
 @implementation Student
+
++ (NSString *)t_dbModelTableName
+{
+    return @"student";
+}
 
 @end
