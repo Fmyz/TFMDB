@@ -22,4 +22,8 @@ static NSString *const tSql_Attribute_Default = @"DEFAULT";
 static NSString *const tSql_Attribute_AutoIncrement = @"AUTOINCREMENT";
 static NSString *const tSql_Attribute_Unique = @"UNIQUE";
 
+static NSString *const tSql_Condition_Where = @"WHERE";
+static NSString *const tSql_Condition_OrderBy = @"ORDER BY";
+static NSString *const tSql_Condition_Limit = @"LIMIT";
+
 #endif /* TDBModelUtils_h */

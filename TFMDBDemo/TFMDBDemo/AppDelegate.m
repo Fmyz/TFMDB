@@ -28,7 +28,7 @@
     NSString *password = nil;//@"YourPassword";
     
     BOOL suc = [[TestDBHelper helperInstance] openDB:dbPath password:password];
-    NSLog(@"openDB suc: %d", suc);
+    NSLog(@"openDB suc: %d\npath:%@", suc, dbPath);
     
     
     return YES;

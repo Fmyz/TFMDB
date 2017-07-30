@@ -16,4 +16,25 @@
     return @"student";
 }
 
++ (NSArray *)t_dbModelPrimaryKeyPropertyNames
+{
+    return @[@"sid"];
+}
+
++ (NSArray *)t_dbModelAutoIncrementPropertyNames
+{
+    return @[@"sid"];
+}
+
++ (NSArray *)mj_ignoredPropertyNames
+{
+    //创建表的时候会忽略的属性
+    return @[@"ignoreStr"];
+}
+
+//+ (NSArray *)mj_allowedPropertyNames
+//{
+//
+//}
+
 @end

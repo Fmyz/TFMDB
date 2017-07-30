@@ -17,5 +17,6 @@
 @property (assign, nonatomic) NSInteger cid;    //班级id
 @property (assign, nonatomic) BOOL good;        //是否优秀
 
+@property (copy, nonatomic) NSString *ignoreStr; //忽略的属性
 
 @end

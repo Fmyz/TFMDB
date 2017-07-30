@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, StudentType) {
 @property (assign, nonatomic) NSInteger cid;    //班级id
 @property (copy, nonatomic) NSArray<Teacher *> *teachers;   //老师
 @property (assign, nonatomic) NSInteger number;   //人数
+@property (strong, nonatomic) NSDictionary<NSString *, Student *> *studentDic;
 
 @end
 
@@ -31,6 +32,5 @@ typedef NS_ENUM(NSInteger, StudentType) {
 @property (copy, nonatomic) NSString *tid;      //教师id
 @property (copy, nonatomic) NSString *name;
 @property (assign, nonatomic) int age;
-@property (strong, nonatomic) NSDictionary<NSNumber *, Student *> *studentDic;
 
 @end

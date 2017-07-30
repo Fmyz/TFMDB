@@ -9,13 +9,10 @@
 #import "NSObject+TDBModel.h"
 #import "TDBModelUtils.h"
 
-#import "MJExtension.h"
-
 @implementation NSObject (TDBModel)
 
 + (NSString *)sqlForCreateTable:(NSString *)tableName
 {
-    NSString *sql = nil;
     if (!tableName || !tableName.length) {
         tableName = [self t_tableName];
     }
@@ -33,14 +30,15 @@
     if (!ivarNames && !ivarNames.count) {
         return nil;
     }
-    
+    NSInteger count = MIN(propertys.count, ivarNames.count);
+
+    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (", tableName];
+
     NSArray *primaryKeyPropertyNames = [self t_primaryKeyPropertyNames];
     NSArray *autoIncrementPropertyNames = [self t_autoIncrementPropertyNames];
     
-    sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (", tableName];
-    NSInteger count = MIN(propertys.count, ivarNames.count);
-    
     NSMutableArray<NSString *> *columns = [NSMutableArray array];
+    
     for (NSInteger index = 0; index < count; index++) {
         MJProperty *property = [propertys objectAtIndex:index];
         if (![ivarNames containsObject:property.name]) {
@@ -57,11 +55,12 @@
         column = [column stringByAppendingString:sqlType];
         
         if ([primaryKeyPropertyNames containsObject:name]) {
-            column = [column stringByAppendingString:tSql_Attribute_PrimaryKey];
             column = [column stringByAppendingString:@" "];
+            column = [column stringByAppendingString:tSql_Attribute_PrimaryKey];
         }
         
         if ([autoIncrementPropertyNames containsObject:name]) {
+            column = [column stringByAppendingString:@" "];
             column = [column stringByAppendingString:tSql_Attribute_AutoIncrement];
         }
         
@@ -74,6 +73,195 @@
     }
     
     sql = [sql stringByAppendingString:@")"];
+    return sql;
+}
+
+- (NSString *)sqlForInsertIntoTable:(NSString *)tableName isReplace:(BOOL)isReplace
+{
+    Class modelClass = [self class];
+    if (!tableName || !tableName.length) {
+        tableName = [modelClass t_tableName];
+    }
+    
+    if (!tableName || !tableName.length) {
+        return nil;
+    }
+    
+    NSArray<MJProperty *> *propertys = [modelClass getClassMJPropertys];
+    if (!propertys && !propertys.count) {
+        return nil;
+    }
+    
+    NSArray<NSString *> *ivarNames = [modelClass getClassIvarNames];
+    if (!ivarNames && !ivarNames.count) {
+        return nil;
+    }
+    NSInteger count = MIN(propertys.count, ivarNames.count);
+    
+    NSString *sql = isReplace? @"REPLACE" : @"INSERT";
+    sql = [NSString stringWithFormat:@"%@ INTO %@ (", sql, tableName];
+    
+    NSDictionary *keyValues = [self mj_keyValues];
+    NSMutableArray *keys = [NSMutableArray array];
+    NSMutableArray *values = [NSMutableArray array];
+
+    for (NSInteger index = 0; index < count; index++) {
+        MJProperty *property = [propertys objectAtIndex:index];
+        if (![ivarNames containsObject:property.name]) {
+            continue;
+        }
+        
+        NSString *sqlType = [modelClass sqlTypeWithProperty:property];
+        if (!sqlType) {
+            continue;
+        }
+        
+        NSString *key = property.name;
+        id value = [keyValues objectForKey:key];
+        if (value && ![value isKindOfClass:[NSNull class]]) {
+            [keys addObject:key];
+            
+            if ([sqlType isEqualToString:tSql_Type_Text]) {
+                value = [modelClass jsonWithDictValue:value];
+                value = [NSString stringWithFormat:@"'%@'", (NSString *)value];
+            }
+            [values addObject:value];
+        }
+    }
+    
+    if (keys.count) {
+        NSString *keysStr = [keys componentsJoinedByString:@", "];
+        sql = [sql stringByAppendingString:keysStr];
+    }
+    
+    sql = [sql stringByAppendingString:@") VALUES("];
+    
+    if (values.count) {
+        NSString *valuesStr = [values componentsJoinedByString:@", "];
+        sql = [sql stringByAppendingString:valuesStr];
+    }
+    
+    sql = [sql stringByAppendingString:@")"];
+    
+    return sql;
+}
+
+- (NSString *)sqlForUpdateTable:(NSString *)tableName whereSql:(NSString *)whereSql
+{
+    Class modelClass = [self class];
+    if (!tableName || !tableName.length) {
+        tableName = [modelClass t_tableName];
+    }
+    
+    if (!tableName || !tableName.length) {
+        return nil;
+    }
+    
+    NSArray<MJProperty *> *propertys = [modelClass getClassMJPropertys];
+    if (!propertys && !propertys.count) {
+        return nil;
+    }
+    
+    NSArray<NSString *> *ivarNames = [modelClass getClassIvarNames];
+    if (!ivarNames && !ivarNames.count) {
+        return nil;
+    }
+    NSInteger count = MIN(propertys.count, ivarNames.count);
+    
+    NSString *sql = [NSString stringWithFormat:@"UPDATE %@ SET ", tableName];
+    
+    NSDictionary *keyValues = [self mj_keyValues];
+    NSMutableArray *keyValuesArr = [NSMutableArray array];
+    
+    for (NSInteger index = 0; index < count; index++) {
+        MJProperty *property = [propertys objectAtIndex:index];
+        if (![ivarNames containsObject:property.name]) {
+            continue;
+        }
+        
+        NSString *sqlType = [modelClass sqlTypeWithProperty:property];
+        if (!sqlType) {
+            continue;
+        }
+        
+        NSString *key = property.name;
+        id value = [keyValues objectForKey:key];
+        if (value && ![value isKindOfClass:[NSNull class]]) {
+            if ([sqlType isEqualToString:tSql_Type_Text]) {
+                value = [modelClass jsonWithDictValue:value];
+                value = [NSString stringWithFormat:@"'%@'", (NSString *)value];
+            }
+            [keyValuesArr addObject:[NSString stringWithFormat:@"%@ = %@", key, value]];
+        }
+    }
+    
+    if (keyValuesArr.count) {
+        NSString *keyValuesStr = [keyValuesArr componentsJoinedByString:@", "];
+        sql = [sql stringByAppendingString:keyValuesStr];
+    }
+    
+    sql = [modelClass sql:sql ByAppendingCondition:whereSql rangeOfString:tSql_Condition_Where];
+    
+    return sql;
+}
+
++ (NSString *)sqlForSelectTable:(NSString *)tableName whereSql:(NSString *)whereSql orderbySql:(NSString *)orderbySql limitSql:(NSString *)limitSql
+{
+    if (!tableName || !tableName.length) {
+        tableName = [self t_tableName];
+    }
+    
+    if (!tableName || !tableName.length) {
+        return nil;
+    }
+    
+    NSArray<MJProperty *> *propertys = [self getClassMJPropertys];
+    if (!propertys && !propertys.count) {
+        return nil;
+    }
+    
+    NSArray<NSString *> *ivarNames = [self getClassIvarNames];
+    if (!ivarNames && !ivarNames.count) {
+        return nil;
+    }
+
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@", tableName];
+    
+    sql = [self sql:sql ByAppendingCondition:whereSql rangeOfString:tSql_Condition_Where];
+    sql = [self sql:sql ByAppendingCondition:orderbySql rangeOfString:tSql_Condition_OrderBy];
+    sql = [self sql:sql ByAppendingCondition:limitSql rangeOfString:tSql_Condition_Limit];
+    
+    return sql;
+}
+
++ (NSString *)sqlForDeleteTable:(NSString *)tableName whereSql:(NSString *)whereSql
+{
+    if (!tableName || !tableName.length) {
+        tableName = [self t_tableName];
+    }
+    
+    if (!tableName || !tableName.length) {
+        return nil;
+    }
+    
+    NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@", tableName];
+    sql = [self sql:sql ByAppendingCondition:whereSql rangeOfString:tSql_Condition_Where];
+    
+    return sql;
+}
+
++ (NSString *)sqlForDropTable:(NSString *)tableName
+{
+    if (!tableName || !tableName.length) {
+        tableName = [self t_tableName];
+    }
+    
+    if (!tableName || !tableName.length) {
+        return nil;
+    }
+    
+    NSString *sql = [NSString stringWithFormat:@"DROP TABLE IF EXISTS %@", tableName];
+    
     return sql;
 }
 
@@ -141,6 +329,178 @@
     return sqlType;
 }
 
++ (NSString *)sql:(NSString *)sql ByAppendingCondition:(NSString *)condition rangeOfString:(NSString *)rangeOfString
+{
+    if (!condition) {
+        return sql;
+    }
+    
+    if ([condition rangeOfString:rangeOfString options:NSCaseInsensitiveSearch].location == NSNotFound) {
+        sql = [sql stringByAppendingFormat:@" %@ ", rangeOfString];
+    }
+    
+    sql = [sql stringByAppendingString:condition];
+    
+    return sql;
+}
+
++ (id)modelForKeyValue:(NSDictionary *)keyValues
+{
+    id model = [self mj_objectWithKeyValues:keyValues];
+    return model;
+}
+
++ (NSString *)jsonWithDictValue:(id)value
+{
+    NSMutableDictionary *mValue = nil;
+    if ([value isKindOfClass:[NSDictionary class]]) {
+        mValue = [NSMutableDictionary dictionaryWithDictionary:value];
+        NSArray *subKeys = [mValue allKeys];
+        for (id subKey in subKeys) {
+            id subValue = [value objectForKey:subKey];
+            
+            if ([subValue isKindOfClass:[NSDictionary class]]) {
+                subValue = [self jsonWithDictValue:subValue];
+            }
+            NSString *newValue = [subValue mj_JSONString];
+            [mValue setObject:newValue forKey:subKey];
+        }
+        
+        if (mValue) {
+            value = [mValue copy];
+        }
+    }
+    value = [value mj_JSONString];
+    return value;
+}
+
++ (NSString *)propertyNameWithDBKey:(NSString *)dbKey
+{
+    NSArray<MJProperty *> *propertys = [self getClassMJPropertys];
+    if (!propertys && !propertys.count) {
+        return dbKey;
+    }
+    
+    NSArray<NSString *> *ivarNames = [self getClassIvarNames];
+    if (!ivarNames && !ivarNames.count) {
+        return dbKey;
+    }
+    NSInteger count = MIN(propertys.count, ivarNames.count);
+
+    NSString *propertyName = dbKey;
+    for (NSInteger index = 0; index < count; index++) {
+        MJProperty *property = [propertys objectAtIndex:index];
+        if (![ivarNames containsObject:property.name]) {
+            continue;
+        }
+        
+        NSString *lowerPropertyName = [property.name lowercaseString];
+        if (![lowerPropertyName isEqualToString:dbKey]) {
+            continue;
+        }
+        propertyName = property.name;
+        break;
+
+    }
+    return propertyName;
+}
+
++ (id)propertyName:(NSString *)propertyName valueCheckIsDictionary:(id)value
+{
+    NSArray<MJProperty *> *propertys = [self getClassMJPropertys];
+    if (!propertys && !propertys.count) {
+        return value;
+    }
+    
+    NSArray<NSString *> *ivarNames = [self getClassIvarNames];
+    if (!ivarNames && !ivarNames.count) {
+        return value;
+    }
+    NSInteger count = MIN(propertys.count, ivarNames.count);
+    
+    id jsonObject = value;
+    for (NSInteger index = 0; index < count; index++) {
+        MJProperty *property = [propertys objectAtIndex:index];
+        if (![ivarNames containsObject:property.name]) {
+            continue;
+        }
+        if (![property.name isEqualToString:propertyName]) {
+            continue;
+        }
+        if (![property.type.code isEqualToString:NSStringFromClass([NSDictionary class])]) {
+            continue;
+        }
+        jsonObject = [value mj_JSONObject];
+        
+        if (!jsonObject || ![jsonObject isKindOfClass:[NSDictionary class]]) {
+            break;
+        }
+        id modelDict = [self modelDictForJsonObejct:jsonObject propertyName:propertyName];
+        jsonObject = modelDict;
+        break;
+    }
+    
+    return jsonObject;
+}
+
++ (NSDictionary *)modelDictForJsonObejct:(id)jsonObject propertyName:(NSString *)propertyName
+{
+    NSDictionary *objectClassInDictionary = [self t_objectClassInDictionary];
+    if (!objectClassInDictionary || !objectClassInDictionary.allKeys.count) {
+        return jsonObject;
+    }
+    
+    if (![objectClassInDictionary.allKeys containsObject:propertyName]) {
+        return jsonObject;
+    }
+    
+    id objectClass = [objectClassInDictionary objectForKey:propertyName];
+    if ([objectClass isKindOfClass:[NSString class]]) {
+        objectClass = NSClassFromString(objectClass);
+    }
+    
+    NSDictionary *modelDict = [objectClass modelDictForJsonObejct:jsonObject];
+    return modelDict;
+}
+
++ (NSDictionary *)modelDictForJsonObejct:(id)jsonObject
+{
+    NSMutableDictionary *modelDict = [NSMutableDictionary dictionary];
+    for (id jsonKey in ((NSDictionary *)jsonObject).allKeys) {
+        id jsonValue = [jsonObject objectForKey:jsonKey];
+        if ([jsonValue isKindOfClass:[NSDictionary class]]) {
+            jsonValue = [self jsonValueWithDict:jsonValue];
+            jsonValue = [self mj_objectWithKeyValues:jsonValue];
+        }
+        [modelDict setObject:jsonValue forKey:jsonKey];
+    }
+    return [modelDict copy];
+}
+
++ (id)jsonValueWithDict:(NSDictionary *)jsonDict
+{
+    NSDictionary *objectClassInDictionary = [self t_objectClassInDictionary];
+    if (!objectClassInDictionary || !objectClassInDictionary.allKeys.count) {
+        return jsonDict;
+    }
+    
+    NSMutableDictionary *jsonValue = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
+    for (id key in objectClassInDictionary.allKeys) {
+        if (![jsonDict.allKeys containsObject:key]) {
+            continue;
+        }
+        
+        id objectClass = [objectClassInDictionary objectForKey:key];
+        if ([objectClass isKindOfClass:[NSString class]]) {
+            objectClass = NSClassFromString(objectClass);
+        }
+        id jsonObject = [jsonDict objectForKey:key];
+        jsonObject = [objectClass modelDictForJsonObejct:jsonObject propertyName:key];
+        [jsonValue setObject:jsonObject forKey:key];
+    }
+    return [jsonValue copy];
+}
+
 #pragma mark - 表名
 + (NSString *)t_tableName
 {
@@ -155,8 +515,8 @@
 + (NSArray *)t_primaryKeyPropertyNames
 {
     NSArray *t_primaryKeyPropertyNames = nil;
-    if ([self respondsToSelector:@selector(t_dbModePrimaryKeyPropertyNames)]) {
-        t_primaryKeyPropertyNames = [self performSelector:@selector(t_dbModePrimaryKeyPropertyNames)];
+    if ([self respondsToSelector:@selector(t_dbModelPrimaryKeyPropertyNames)]) {
+        t_primaryKeyPropertyNames = [self performSelector:@selector(t_dbModelPrimaryKeyPropertyNames)];
     }
     return t_primaryKeyPropertyNames;
 }
@@ -166,10 +526,20 @@
 + (NSArray *)t_autoIncrementPropertyNames
 {
     NSArray *t_autoIncrementPropertyNames = nil;
-    if ([self respondsToSelector:@selector(t_dbModeAutoIncrementPropertyNames)]) {
-        t_autoIncrementPropertyNames = [self performSelector:@selector(t_dbModeAutoIncrementPropertyNames)];
+    if ([self respondsToSelector:@selector(t_dbModelAutoIncrementPropertyNames)]) {
+        t_autoIncrementPropertyNames = [self performSelector:@selector(t_dbModelAutoIncrementPropertyNames)];
     }
     return t_autoIncrementPropertyNames;
+}
+
+#pragma mark - 自增
++ (NSDictionary *)t_objectClassInDictionary
+{
+    NSDictionary *t_objectClassInDictionary = nil;
+    if ([self respondsToSelector:@selector(t_dbModelObjectClassInDictionary)]) {
+        t_objectClassInDictionary = [self performSelector:@selector(t_dbModelObjectClassInDictionary)];
+    }
+    return t_objectClassInDictionary;
 }
 
 + (NSString *)replaceFirstUnderline:(NSString *)ivarName

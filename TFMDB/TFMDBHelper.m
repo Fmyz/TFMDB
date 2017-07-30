@@ -174,12 +174,13 @@
     
     [self.dbQueue inDatabase:^(FMDatabase *db) {
         FMResultSet *rs = [db executeQuery:sql];
-        
-        if (complete) {
-            __weak typeof(rs) weakRS = rs;
-            complete(weakRS);
+        while ([rs next]) {
+            // 每条记录的检索值
+            if (complete) {
+                __weak typeof(rs) weakRS = rs;
+                complete(weakRS);
+            }
         }
-        
         [rs close];
     }];
     
@@ -304,6 +305,10 @@
 - (NSString *)getTableSchema:(NSString *)tableName
 {
     if (![self isOpenDB]) {
+        return nil;
+    }
+    
+    if (![self existsTable:tableName]) {
         return nil;
     }
     

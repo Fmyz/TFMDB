@@ -21,10 +21,17 @@
     return @{@"teachers":@"Teacher"};
 }
 
++ (NSDictionary *)t_dbModelObjectClassInDictionary
+{
+    return @{@"studentDic":@"Student"};
+}
+
 + (NSString *)t_dbModelTableName
 {
     return @"classes";
 }
+
+
 
 @end
 

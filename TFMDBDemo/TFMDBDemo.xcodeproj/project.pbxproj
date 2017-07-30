@@ -141,7 +141,7 @@
 				5A124DC61F24FA2400C4CECB /* AppDelegate.m */,
 				5A124DC81F24FA2400C4CECB /* ViewController.h */,
 				5A124DC91F24FA2400C4CECB /* ViewController.m */,
-				5A124E061F25048200C4CECB /* model */,
+				5A124E061F25048200C4CECB /* testModel */,
 				5A124DCB1F24FA2400C4CECB /* Main.storyboard */,
 				5A124DCE1F24FA2400C4CECB /* Assets.xcassets */,
 				5A124DD01F24FA2400C4CECB /* LaunchScreen.storyboard */,
@@ -194,7 +194,7 @@
 			path = ../../TFMDB;
 			sourceTree = "<group>";
 		};
-		5A124E061F25048200C4CECB /* model */ = {
+		5A124E061F25048200C4CECB /* testModel */ = {
 			isa = PBXGroup;
 			children = (
 				5A124E071F2504AC00C4CECB /* TestDBHelper.h */,
@@ -204,7 +204,7 @@
 				5A124E0D1F25088600C4CECB /* Classes.h */,
 				5A124E0E1F25088600C4CECB /* Classes.m */,
 			);
-			name = model;
+			name = testModel;
 			sourceTree = "<group>";
 		};
 		68424E361F29C12900FF6213 /* TDBModel */ = {
