@@ -8,20 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, StudentType) {
-
-    StudentTypeWeak = 0,
-    StudentTypeGood,
-
-};
-
 @class Student;
 @class Teacher;
 @interface Classes : NSObject
 
-@property (assign, nonatomic) NSInteger cid;    //班级id
-@property (copy, nonatomic) NSArray<Teacher *> *teachers;   //老师
-@property (assign, nonatomic) NSInteger number;   //人数
+@property (assign, nonatomic) NSInteger cid;
+@property (copy, nonatomic) NSArray<Teacher *> *teachers;
 @property (strong, nonatomic) NSDictionary<NSString *, Student *> *studentDic;
 
 @end
@@ -29,8 +21,7 @@ typedef NS_ENUM(NSInteger, StudentType) {
 
 @interface Teacher : NSObject
 
-@property (copy, nonatomic) NSString *tid;      //教师id
-@property (copy, nonatomic) NSString *name;
-@property (assign, nonatomic) int age;
+@property (copy, nonatomic) NSString *tid;
+@property (strong, nonatomic) NSDictionary<NSString *, Student *> *studentDic;
 
 @end

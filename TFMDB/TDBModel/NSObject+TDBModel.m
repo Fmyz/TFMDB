@@ -123,6 +123,7 @@
             
             if ([sqlType isEqualToString:tSql_Type_Text]) {
                 value = [modelClass jsonWithDictValue:value];
+                value = [value mj_JSONString];
                 value = [NSString stringWithFormat:@"'%@'", (NSString *)value];
             }
             [values addObject:value];
@@ -200,7 +201,7 @@
         sql = [sql stringByAppendingString:keyValuesStr];
     }
     
-    sql = [modelClass sql:sql ByAppendingCondition:whereSql rangeOfString:tSql_Condition_Where];
+    sql = [modelClass sql:sql byAppendingCondition:whereSql rangeOfString:tSql_Condition_Where];
     
     return sql;
 }
@@ -227,9 +228,9 @@
 
     NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@", tableName];
     
-    sql = [self sql:sql ByAppendingCondition:whereSql rangeOfString:tSql_Condition_Where];
-    sql = [self sql:sql ByAppendingCondition:orderbySql rangeOfString:tSql_Condition_OrderBy];
-    sql = [self sql:sql ByAppendingCondition:limitSql rangeOfString:tSql_Condition_Limit];
+    sql = [self sql:sql byAppendingCondition:whereSql rangeOfString:tSql_Condition_Where];
+    sql = [self sql:sql byAppendingCondition:orderbySql rangeOfString:tSql_Condition_OrderBy];
+    sql = [self sql:sql byAppendingCondition:limitSql rangeOfString:tSql_Condition_Limit];
     
     return sql;
 }
@@ -245,7 +246,7 @@
     }
     
     NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@", tableName];
-    sql = [self sql:sql ByAppendingCondition:whereSql rangeOfString:tSql_Condition_Where];
+    sql = [self sql:sql byAppendingCondition:whereSql rangeOfString:tSql_Condition_Where];
     
     return sql;
 }
@@ -329,7 +330,7 @@
     return sqlType;
 }
 
-+ (NSString *)sql:(NSString *)sql ByAppendingCondition:(NSString *)condition rangeOfString:(NSString *)rangeOfString
++ (NSString *)sql:(NSString *)sql byAppendingCondition:(NSString *)condition rangeOfString:(NSString *)rangeOfString
 {
     if (!condition) {
         return sql;
@@ -352,25 +353,44 @@
 
 + (NSString *)jsonWithDictValue:(id)value
 {
-    NSMutableDictionary *mValue = nil;
     if ([value isKindOfClass:[NSDictionary class]]) {
-        mValue = [NSMutableDictionary dictionaryWithDictionary:value];
+        NSMutableDictionary *mValue = [NSMutableDictionary dictionaryWithDictionary:value];
         NSArray *subKeys = [mValue allKeys];
         for (id subKey in subKeys) {
             id subValue = [value objectForKey:subKey];
             
-            if ([subValue isKindOfClass:[NSDictionary class]]) {
-                subValue = [self jsonWithDictValue:subValue];
+            id keyValues = [subValue mj_keyValues];
+            if ([keyValues isKindOfClass:[NSDictionary class]]) {
+                subValue = [self jsonWithDictValue:keyValues];
             }
-            NSString *newValue = [subValue mj_JSONString];
-            [mValue setObject:newValue forKey:subKey];
+            subValue = [self jsonWithDictValue:subValue];
+            [mValue setObject:subValue forKey:subKey];
         }
         
         if (mValue) {
             value = [mValue copy];
         }
+    } else if ([value isKindOfClass:[NSArray class]]) {
+        NSMutableArray *mValue = [NSMutableArray arrayWithArray:value];
+        for (id object in value) {
+            id newObject = object;
+            id keyValues = [object mj_keyValues];
+            if ([keyValues isKindOfClass:[NSDictionary class]]) {
+                newObject = [self jsonWithDictValue:keyValues];
+            }
+            id jsonObject = [self jsonWithDictValue:newObject];
+            NSInteger index = [value indexOfObject:object];
+            [mValue replaceObjectAtIndex:index withObject:jsonObject];
+        }
+        if (mValue) {
+            value = [mValue copy];
+        }
+    } else {
+        if ([value isKindOfClass:[NSNumber class]]) {
+            value = ((NSNumber *)value).stringValue;
+        }
+        value = [value mj_JSONString];
     }
-    value = [value mj_JSONString];
     return value;
 }
 
@@ -468,6 +488,7 @@
     NSMutableDictionary *modelDict = [NSMutableDictionary dictionary];
     for (id jsonKey in ((NSDictionary *)jsonObject).allKeys) {
         id jsonValue = [jsonObject objectForKey:jsonKey];
+        jsonValue = [jsonValue mj_JSONObject];
         if ([jsonValue isKindOfClass:[NSDictionary class]]) {
             jsonValue = [self jsonValueWithDict:jsonValue];
             jsonValue = [self mj_objectWithKeyValues:jsonValue];

@@ -30,17 +30,20 @@
 }
 
 - (IBAction)SQLCreateTableStudent:(id)sender {
-    NSString *sql = @"CREATE TABLE IF NOT EXISTS student (sid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER, score FLOAT, cid INTEGER, good BLOB);";
+    NSString *sql = @"CREATE TABLE IF NOT EXISTS student (sId INTEGER PRIMARY KEY, name TEXT, SInfoDic TEXT, cid INTEGER);";
     BOOL suc = [_helper executeUpdate:sql];
     NSLog(@"SQLCreateTableStudent suc: %d", suc);
 }
 - (IBAction)SQLStudentInsertOne:(id)sender {
-    NSString *sql = [NSString stringWithFormat:@"INSERT INTO student(name, age, score, cid, good) values('%@', %d, %f, %d, %d)", @"s1001", 14, 127.3, 1702, YES];
+    
+    NSInteger sid = 1000 + arc4random() % 1000;
+    NSString *sql = [NSString stringWithFormat:@"INSERT INTO student(sId, name, cid) values(%ld, '%@', %d)", (long)sid, @"s1001", 1701];
     BOOL suc = [_helper executeUpdate:sql];
     NSLog(@"SQLStudentInsertOne suc: %d", suc);
 }
 - (IBAction)SQLStudentInsertFormat:(id)sender {
-    BOOL suc = [_helper executeUpdateWithFormat:@"INSERT INTO student(name, age, score, cid, good) values(?, ?, ?, ?, ?)", @"s1002", [NSNumber numberWithInteger:15], [NSNumber numberWithFloat:134.3], [NSNumber numberWithInteger:1701], [NSNumber numberWithBool:NO], nil];
+    NSInteger sid = 1000 + arc4random() % 1000;
+    BOOL suc = [_helper executeUpdateWithFormat:@"INSERT INTO student(sId, name, cid) values(?, ?, ?)", [NSNumber numberWithInteger:sid], @"s1002", [NSNumber numberWithInteger:1701], nil];
     NSLog(@"SQLStudentInsertFormat suc: %d", suc);
 }
 - (IBAction)SQLStudentInsertMore:(id)sender {
@@ -49,16 +52,12 @@
     NSMutableArray *mores1 = [NSMutableArray array];
     NSMutableArray *mores2 = [NSMutableArray array];
     
+    
     for (NSInteger index = 0; index < number; index++) {
-        
-        NSString *name = [NSString stringWithFormat:@"s%ld", (long)index];
-        NSInteger age = arc4random()%19 + 10;
-        CGFloat score = (100 + arc4random()%1400)/10.f;
-        
         NSInteger cid = (index < number / 3)?1701:(index<number/3*2)?1702:1703;
-        BOOL good = (arc4random()%10 > 5);
+        NSString *name = [NSString stringWithFormat:@"s%ld", (long)index];
         
-        NSString *sql = [NSString stringWithFormat:@"INSERT INTO student(name, age, score, cid, good) values('%@', %ld, %.2f, %ld, %d)", name, (long)age, score, (long)cid, good];
+        NSString *sql = [NSString stringWithFormat:@"INSERT INTO student(sId, name, cid) values(%ld, '%@', %ld)", (long)index, name, (long)cid];
         
         if (index < number / 2) {
             [mores1 addObject:sql];
@@ -68,15 +67,10 @@
     }
     
     NSDate *date1 = [NSDate date];
-    //    [_helper executeTransaction:mores1 progress:^(NSInteger curIndex, NSInteger totalCount, NSString *errorMsg) {
-    //        if (errorMsg) {
-    //            NSLog(@"curIndex:%ld totalCount:%ld", (long)curIndex, (long)totalCount);
-    //        }
-    //    }];
     for (NSString *sql in mores1) {
         BOOL suc = [_helper executeUpdate:sql];
         if (!suc) {
-            NSLog(@"executeUpdate suc:%d, sql:%@", suc, sql);
+            NSLog(@"SQLStudentInsertMore suc:%d, sql:%@", suc, sql);
             break;
         }
     }
@@ -87,75 +81,20 @@
     
     [_helper executeTransaction:mores2 progress:^(NSInteger curIndex, NSInteger totalCount, NSString *errorMsg) {
         if (errorMsg) {
-            NSLog(@"curIndex:%ld totalCount:%ld", (long)curIndex, (long)totalCount);
+            NSLog(@"SQLStudentInsertMore curIndex:%ld totalCount:%ld", (long)curIndex, (long)totalCount);
         }
     }];
-    //    for (NSString *sql in mores2) {
-    //        BOOL suc = [_helper executeUpdate:sql];
-    //        if (!suc) {
-    //            NSLog(@"executeUpdate suc:%d, sql:%@", suc, sql);
-    //            break;
-    //        }
-    //    }
     NSDate *date3 = [NSDate date];
     NSTimeInterval b = [date3 timeIntervalSince1970] - [date2 timeIntervalSince1970];
     NSLog(@"使用事务插入500条数据用时%.3f秒",b);
 }
-- (IBAction)SQLStudentSelect:(id)sender {
-    
-    NSString *sql = @"SELECT * FROM student WHERE name = 's1001' LIMIT 1";
-    [_helper executeQuery:sql complete:^(FMResultSet *rs) {
-       
-        NSInteger sid = [[rs objectForColumn:@"sid"] integerValue];
-        NSString *name = [rs objectForColumn:@"name"];
-        NSInteger age = [[rs objectForColumn:@"age"] integerValue];
-        float score = [[rs objectForColumn:@"score"] floatValue];
-        NSInteger cid = [[rs objectForColumn:@"cid"] integerValue];
-        BOOL good = [[rs objectForColumn:@"good"] boolValue];
-
-        NSLog(@"SQLStudentSelect{sid:%ld, name:%@, age:%ld, score:%f, cid:%ld, good:%d}", (long)sid, name, (long)age, score, (long)cid, good);
-    }];
-}
-- (IBAction)SQLStudentDelete:(id)sender {
-    NSString *sql = @"DELETE * FROM student WHERE name = 's1001'";
-    BOOL suc = [_helper executeUpdate:sql];
-    NSLog(@"SQLStudentDelete suc: %d", suc);
-}
-- (IBAction)SQLStudentDrop:(id)sender {
-    NSString *sql = @"DROP TABLE IF EXISTS student";
-    BOOL suc = [_helper executeUpdate:sql];
-    NSLog(@"SQLStudentDrop suc: %d", suc);
-}
 - (IBAction)SQLCreateTableStudentAndClasses:(id)sender {
     NSString *sql =
-    @"CREATE TABLE IF NOT EXISTS student (sid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER, score FLOAT, cid INTEGER, good BLOB);"
-    "CREATE TABLE IF NOT EXISTS classes (cid INTEGER PRIMARY KEY, teachers TEXT, number INTEGER, studentDic TEXT);";
+    @"CREATE TABLE IF NOT EXISTS student (sId INTEGER PRIMARY KEY, name TEXT, SInfoDic TEXT, cid INTEGER);"
+    "CREATE TABLE IF NOT EXISTS classes (cid INTEGER PRIMARY KEY, teachers TEXT, studentDic TEXT);";
     NSLog(@"SQLCreateTableStudentAndClasses sql: %@", sql);
     BOOL suc = [_helper executeStatements:sql];
     NSLog(@"SQLCreateTableStudentAndClasses suc: %d", suc);
-}
-- (IBAction)SQLClassesInsert:(id)sender {
-    NSDictionary *teacherDict = @{@"tid":[NSNumber numberWithInteger:101], @"name":@"liu", @"age":[NSNumber numberWithInteger:18]};
-    NSArray<NSDictionary *> *teachers = @[teacherDict, teacherDict];
-    NSString *teachersJsonStr = [teachers mj_JSONString];
-    
-    NSDictionary *studentDict = @{@"sid":[NSNumber numberWithInteger:1222], @"name":@"Tan", @"age":[NSNumber numberWithInteger:17], @"score":[NSNumber numberWithFloat:136.f], @"cid":[NSNumber numberWithInteger:1701], @"good":[NSNumber numberWithBool:YES]};
-    NSDictionary *studentDic = @{[NSString stringWithFormat:@"%ld", (long)StudentTypeGood]:studentDict, [NSString stringWithFormat:@"%ld", (long)StudentTypeWeak]:studentDict};
-    NSString *studentDicJsonStr = [studentDic mj_JSONString];
-    
-    BOOL suc = [_helper executeUpdateWithFormat:@"INSERT INTO classes(cid, teachers, number, studentDic) values(?, ?, ?, ?)", [NSNumber numberWithInteger:1701], teachersJsonStr, [NSNumber numberWithInteger:40], studentDicJsonStr, nil];
-    NSLog(@"SQLClassesInsert suc: %d", suc);
-    
-}
-- (IBAction)SQLClassesSelect:(id)sender {
-    NSString *sql = @"SELECT * FROM classes WHERE cid = 1701 LIMIT 1";
-    [_helper executeQuery:sql complete:^(FMResultSet *rs) {
-        NSInteger cid = [[rs objectForColumn:@"cid"] integerValue];
-        NSString *teachers = [rs objectForColumn:@"teachers"];
-        NSInteger number = [[rs objectForColumn:@"number"] integerValue];
-        NSString *studentDic = [rs objectForColumn:@"studentDic"];
-        NSLog(@"SQLClassesSelect{cid:%ld\nteachers:%@\nnumber:%ld\nstudentDic:%@}", (long)cid, teachers, (long)number, studentDic);
-    }];
 }
 - (IBAction)SQLSchema:(id)sender {
     NSString *schema = [_helper getTableSchema:@"student"];
@@ -167,30 +106,28 @@
 
 #pragma mark - Sql Model
 - (IBAction)StudentCreateTable:(id)sender {
+    //如果没有实现t_dbModelTableName，需要带上tablename
     BOOL suc = [_helper executeCreateTable:nil modelClass:[Student class]];
     NSLog(@"StudentCreateTable suc: %d", suc);
 }
 - (IBAction)StudentInsertTable:(id)sender {
-    
-    //主键唯一， 第二次会失败
-    NSDictionary *studentDict = @{@"sid":[NSNumber numberWithInteger:1111], @"name":@"liu", @"age":[NSNumber numberWithInteger:18], @"score":[NSNumber numberWithFloat:132.f], @"cid":[NSNumber numberWithInteger:1701], @"good":[NSNumber numberWithBool:YES]};
-    Student *student = [Student mj_objectWithKeyValues:studentDict];
-    
+    Student *student = [self getOneStudent];
+    static NSInteger sid = 1004;
+    student.sId = sid;
+    sid++;
     BOOL suc = [_helper executeInsertIntoTable:nil model:student];
     NSLog(@"StudentInsertTable suc: %d", suc);
 }
 - (IBAction)StudentReplaceTable:(id)sender {
-    NSDictionary *studentDict = @{@"sid":[NSNumber numberWithInteger:1111], @"name":@"s1111", @"age":[NSNumber numberWithInteger:18], @"score":[NSNumber numberWithFloat:131.f], @"cid":[NSNumber numberWithInteger:1701], @"good":[NSNumber numberWithBool:NO]};
-    Student *student = [Student mj_objectWithKeyValues:studentDict];
     
+    Student *student = [self getOneStudent];
+    student.sId = 1004;
     BOOL suc = [_helper executeReplaceIntoTable:nil model:student];
     NSLog(@"StudentReplaceTable suc: %d", suc);
 }
 - (IBAction)StudentUpdateTable:(id)sender {
-    NSDictionary *studentDict = @{@"sid":[NSNumber numberWithInteger:1111], @"name":@"LT"};
-    Student *student = [Student mj_objectWithKeyValues:studentDict];
-    
-    //    BOOL suc = [_helper executeUpdateTable:nil model:student whereSql:@"name = 's1111'"];
+    Student *student = [self getOneStudent];
+    student.sId = 1004;//会根据主键去更新
     BOOL suc = [_helper executeUpdateTable:nil model:student whereSql:nil];
     NSLog(@"StudentUpdateTable suc: %d", suc);
 }
@@ -199,17 +136,16 @@
     NSLog(@"StudentSelect SelectRowCount: %ld", (long)count);
     
     ////desc降序 asc升序
-    NSArray<Student *> *students = [_helper executeSelectTable:nil modelClass:[Student class] whereSql:@"cid = 1701" orderbySql:@"score DESC" limitSql:@"5"];
+    NSArray<Student *> *students = [_helper executeSelectTable:nil modelClass:[Student class] whereSql:@"cid = 1701" orderbySql:@"sId DESC" limitSql:@"2"];
     //    NSArray<Student *> *students = [_helper executeSelectTable:nil modelClass:[Student class] whereSql:nil orderbySql:nil limitSql:nil];
-    
     NSLog(@"StudentSelect executeSelectTable count: %lu", (unsigned long)students.count);
-    
     for (Student *student in students) {
-        NSLog(@"StudentSelect{sid:%ld, name:%@, age:%ld, score:%.2f, cid:%ld, good:%d}", (long)student.sid, student.name, (long)student.age, student.score, (long)student.cid, student.good);
+        NSLog(@"StudentSelect{sid:%ld, name:%@, SInfoDic:%@, cid:%ld}", (long)student.sId, student.name, student.SInfoDic, (long)student.cid);
     }
 }
 - (IBAction)StudentDelete:(id)sender {
-    BOOL suc = [_helper executeDeleteTable:nil modelClass:[Student class] whereSql:@"cid = 1703"];
+    BOOL suc = [_helper executeDeleteTable:nil modelClass:[Student class] whereSql:nil];
+//    BOOL suc = [_helper executeDeleteTable:nil modelClass:[Student class] whereSql:@"cid = 1701"];
     NSLog(@"StudentDelete suc: %d", suc);
 }
 - (IBAction)StudentDrop:(id)sender {
@@ -221,17 +157,8 @@
     NSLog(@"ClassesCreateTable suc: %d", suc);
 }
 - (IBAction)ClassesInsertTable:(id)sender {
-    NSDictionary *Studentdict = @{@"sid":[NSNumber numberWithInteger:1223], @"name":@"Tan", @"age":[NSNumber numberWithInteger:17], @"score":[NSNumber numberWithFloat:136.f], @"cid":[NSNumber numberWithInteger:1701], @"good":[NSNumber numberWithBool:YES]};
-    Student *student = [Student mj_objectWithKeyValues:Studentdict];
     
-    NSDictionary<NSNumber *, Student *> *studentDic = @{[NSString stringWithFormat:@"%ld", (long)StudentTypeGood]:student,[NSString stringWithFormat:@"%ld", (long)StudentTypeWeak]:student};
-    NSDictionary *Teacherdict = @{@"tid":[NSNumber numberWithInteger:101], @"name":@"liu", @"age":[NSNumber numberWithInteger:18]};
-    Teacher *teacher = [Teacher mj_objectWithKeyValues:Teacherdict];
-    
-    NSArray<Teacher *> *teachers = @[teacher, teacher];
-    NSDictionary *Classesdict = @{@"cid":[NSNumber numberWithInteger:1701], @"number":[NSNumber numberWithInteger:18], @"teachers":teachers, @"studentDic":studentDic};
-    Classes *classes = [Classes mj_objectWithKeyValues:Classesdict];
-    
+    Classes *classes = [self getOneClasses];
     BOOL suc = [_helper executeInsertIntoTable:nil model:classes];
     NSLog(@"StudentInsertTable suc: %d", suc);
 }
@@ -247,7 +174,7 @@
     NSLog(@"ClassesSelect executeSelectTable count: %lu", (unsigned long)classes.count);
     
     for (Classes *class in classes) {
-        NSLog(@"ClassesSelect{cid:%ld, teachers:%@, number:%ld, studentDic:%@}", (long)class.cid, class.teachers, (long)class.number, class.studentDic);
+        NSLog(@"ClassesSelect{cid:%ld, teachers:%@, studentDic:%@}", (long)class.cid, class.teachers, class.studentDic);
     }
 }
 
@@ -256,6 +183,61 @@
     NSLog(@"ClassesDrop suc: %d", suc);    
 }
 
+- (Student *)getOneStudent
+{
+    NSInteger sid = 2000 + arc4random() % 1000;
+    SInfo *sinfo1 = [self getOneSInfo];
+    sinfo1.sId = sid;
+    
+    SInfo *sinfo2 = [self getOneSInfo];
+    sinfo2.sId = sid + 1;
+    
+    NSInteger scid = 1701;
+    
+    NSDictionary<NSString *, SInfo *> *SInfoDic = @{[NSString stringWithFormat:@"%ld", (long)sid] : sinfo1, [NSString stringWithFormat:@"%ld", (long)sid+1] : sinfo2};
+    NSString *name = [NSString stringWithFormat:@"s%ld", (long)sid];
+    NSDictionary *sdict = @{@"sId":[NSNumber numberWithInteger:sid], @"name":name, @"SInfoDic":SInfoDic, @"ignoreStr":@"ignoreColumn", @"cid":[NSNumber numberWithInteger:scid]};
+    Student *student = [Student mj_objectWithKeyValues:sdict];
+    return student;
+}
+
+- (Classes *)getOneClasses
+{
+    static NSInteger cid = 1700;
+    cid++;
+
+    NSArray<Teacher *> *teachers = @[[self getOneTeacher], [self getOneTeacher]];
+    
+    Student *student1 = [self getOneStudent];
+    Student *student2 = [self getOneStudent];
+    NSDictionary<NSString *, Student *> *studentDic = @{student1.name:student1 , student2.name:student2};
+    
+    NSDictionary *cdict = @{@"cid":[NSNumber numberWithInteger:cid], @"teachers":teachers, @"studentDic":studentDic};
+    Classes *classes = [Classes mj_objectWithKeyValues:cdict];
+    
+    return classes;
+}
+
+- (Teacher *)getOneTeacher
+{
+    NSInteger tid = 100 + arc4random() % 100;
+
+    Student *student1 = [self getOneStudent];
+    Student *student2 = [self getOneStudent];
+    NSDictionary<NSString *, Student *> *studentDic = @{student1.name:student1 , student2.name:student2};
+    
+    NSDictionary *tdict = @{@"tid":[NSNumber numberWithInteger:tid], @"studentDic":studentDic};
+    Teacher *teacher = [Teacher mj_objectWithKeyValues:tdict];
+    
+    return teacher;
+}
+
+- (SInfo *)getOneSInfo
+{
+    SInfo *sinfo = [[SInfo alloc] init];
+    sinfo.age = 9 + arc4random()%18;
+    return sinfo;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

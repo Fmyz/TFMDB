@@ -321,10 +321,17 @@
         while ([rs next]) {
             NSString *name = [rs stringForColumn:@"name"];
             NSString *type = [rs stringForColumn:@"type"];
-            
-            NSArray *attrs = [NSArray arrayWithObjects:name, type, nil];
-            NSString *attrStr = [attrs componentsJoinedByString:@" "];
-            [attrStrs addObject:attrStr];
+            BOOL pk = [[rs objectForColumn:@"pk"] boolValue];
+            if (pk) {
+                NSString *pkStr = @"PRIMARY KEY";
+                NSArray *attrs = [NSArray arrayWithObjects:name, type, pkStr, nil];
+                NSString *attrStr = [attrs componentsJoinedByString:@" "];
+                [attrStrs addObject:attrStr];
+            } else {
+                NSArray *attrs = [NSArray arrayWithObjects:name, type, nil];
+                NSString *attrStr = [attrs componentsJoinedByString:@" "];
+                [attrStrs addObject:attrStr];
+            }
         }
         [rs close];
         

@@ -31,16 +31,20 @@
     return @"classes";
 }
 
-
++ (NSArray *)t_dbModelPrimaryKeyPropertyNames
+{
+    return @[@"cid"];
+}
 
 @end
 
 
 @implementation Teacher
 
-+ (NSString *)t_dbModelTableName
++ (NSDictionary *)t_dbModelObjectClassInDictionary
 {
-    return @"teacher";
+    return @{@"studentDic":@"Student"};
 }
+
 
 @end

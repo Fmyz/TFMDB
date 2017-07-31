@@ -8,15 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+@class SInfo;
 @interface Student : NSObject
 
-@property (assign, nonatomic) NSInteger sid;    //学号
-@property (copy, nonatomic) NSString *name;     //姓名
-@property (assign, nonatomic) NSInteger age;    //年龄
-@property (assign, nonatomic) float score;      //分数
-@property (assign, nonatomic) NSInteger cid;    //班级id
-@property (assign, nonatomic) BOOL good;        //是否优秀
+@property (assign, nonatomic) NSInteger sId;
+@property (copy, nonatomic) NSString *name;
+@property (strong, nonatomic) NSDictionary<NSString *, SInfo *> *SInfoDic;
+@property (assign, nonatomic) NSInteger cid;
 
 @property (copy, nonatomic) NSString *ignoreStr; //忽略的属性
+
+@end
+
+@interface SInfo : NSObject
+
+@property (assign, nonatomic) NSInteger sId;
+@property (assign, nonatomic) NSInteger age;
 
 @end
