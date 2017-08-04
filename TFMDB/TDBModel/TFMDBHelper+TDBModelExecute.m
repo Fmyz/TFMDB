@@ -73,7 +73,7 @@
             if (value && ![value isKindOfClass:[NSNull class]]) {
                 NSString *propertyName = [modelClass propertyNameWithDBKey:key];
                 
-                value = [modelClass propertyName:propertyName valueCheckIsDictionary:value];
+                value = [modelClass propertyName:propertyName valueCheckIsDictionaryOrArray:value];
                 
                 if (propertyName && ![propertyName isKindOfClass:[NSNull class]]) {
                     [keyValues setObject:value forKey:propertyName];

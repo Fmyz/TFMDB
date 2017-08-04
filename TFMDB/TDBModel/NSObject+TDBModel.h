@@ -27,7 +27,7 @@
 
 + (NSString *)propertyNameWithDBKey:(NSString *)dbKey;
 
-+ (id)propertyName:(NSString *)propertyName valueCheckIsDictionary:(id)value;
++ (id)propertyName:(NSString *)propertyName valueCheckIsDictionaryOrArray:(id)value;
 
 + (NSString *)t_tableName;
 
