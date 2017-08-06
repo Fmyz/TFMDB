@@ -428,7 +428,7 @@
 + (id)propertyName:(NSString *)propertyName valueCheckIsDictionaryOrArray:(id)value
 {
     NSDictionary *objectClassInDictionary = [self t_objectClassInDictionary];
-    NSDictionary *objectClassInArray = [self mj_objectClassInArray];
+    NSDictionary *objectClassInArray = [self t_objectClassInArray];
     
     BOOL hasObjectClassInDictionary = (objectClassInDictionary && objectClassInDictionary.count);
     BOOL hasObjectClassInArray = (objectClassInArray && objectClassInArray.count);
@@ -467,9 +467,8 @@
             continue;
         }
         
-        jsonObject = [value mj_JSONObject];
         if (hasObjectClassInDictionary && [objectClassInDictionaryKeys containsObject:propertyName]) {
-            
+            jsonObject = [value mj_JSONObject];
             Class modelClass = [self t_classFromDictionary:objectClassInDictionary key:propertyName];
             if (!modelClass) {
                 break;
@@ -479,6 +478,7 @@
             jsonObject = modelObject;
             
         } else if (hasObjectClassInArray && [objectClassInArrayKeys containsObject:propertyName]) {
+            jsonObject = [value mj_JSONObject];
             Class modelClass = [self t_classFromDictionary:objectClassInArray key:propertyName];
             if (!modelClass) {
                 break;
@@ -497,14 +497,26 @@
     if (![jsonObject isKindOfClass:[NSDictionary class]]) {
         return jsonObject;
     }
-    NSMutableDictionary *modelDict = [NSMutableDictionary dictionary];
+    
+    NSMutableDictionary *modelDict = [NSMutableDictionary dictionaryWithDictionary:jsonObject];
     for (id jsonKey in ((NSDictionary *)jsonObject).allKeys) {
         id jsonValue = [jsonObject objectForKey:jsonKey];
-        jsonValue = [jsonValue mj_JSONObject];
-        if ([jsonValue isKindOfClass:[NSDictionary class]]) {
-            jsonValue = [self modelWithJsonDict:jsonValue];
-            jsonValue = [self mj_objectWithKeyValues:jsonValue];
+        
+        if (!jsonValue || ![jsonValue isKindOfClass:[NSDictionary class]]) {
+            continue;
         }
+        
+        NSMutableDictionary *subModelDict = [NSMutableDictionary dictionary];
+        for (id subKey in ((NSDictionary *)jsonValue).allKeys) {
+            id subValue = [jsonValue objectForKey:subKey];
+            subValue = [self propertyName:subKey valueCheckIsDictionaryOrArray:subValue];
+            if (subValue) {
+                [subModelDict setObject:subValue forKey:subKey];
+            }
+        }
+        
+        jsonValue = [subModelDict copy];
+        jsonValue = [self mj_objectWithKeyValues:jsonValue];
         [modelDict setObject:jsonValue forKey:jsonKey];
     }
     return [modelDict copy];
@@ -518,75 +530,28 @@
     NSMutableArray *modelArray = [NSMutableArray array];
     
     for (id object in (NSArray *)jsonObject) {
-        if ([object isKindOfClass:[NSDictionary class]]) {
-//            id model = []
-        } else if ([object isKindOfClass:[NSArray class]]) {
-
-        }
-        
-        [modelArray addObject:object];
-    }
-    
-    return [modelArray copy];
-}
-
-+ (id)modelWithJsonDict:(NSDictionary *)jsonDict
-{
-    NSDictionary *objectClassInDictionary = [self t_objectClassInDictionary];
-    if (!objectClassInDictionary || !objectClassInDictionary.allKeys.count) {
-        return jsonDict;
-    }
-    
-    NSMutableDictionary *jsonValue = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-    for (id key in objectClassInDictionary.allKeys) {
-        if (![jsonDict.allKeys containsObject:key]) {
+        id jsonValue = object;
+        if (!jsonValue || ![jsonValue isKindOfClass:[NSDictionary class]]) {
+            [modelArray addObject:jsonValue];
             continue;
         }
         
-        id objectClass = [self t_classFromDictionary:objectClassInDictionary key:key];
-        if (!objectClass) {
-            break;
+        NSMutableDictionary *subModelDict = [NSMutableDictionary dictionary];
+        for (id subKey in ((NSDictionary *)jsonValue).allKeys) {
+            id subValue = [jsonValue objectForKey:subKey];
+            subValue = [self propertyName:subKey valueCheckIsDictionaryOrArray:subValue];
+            if (subValue) {
+                [subModelDict setObject:subValue forKey:subKey];
+            }
         }
-        id jsonObject = [jsonDict objectForKey:key];
-        jsonObject = [objectClass modelDictForJsonObejct:jsonObject propertyName:key];
-        [jsonValue setObject:jsonObject forKey:key];
-    }
-    return [jsonValue copy];
-}
-
-+ (NSDictionary *)modelDictForJsonObejct:(id)jsonObject propertyName:(NSString *)propertyName
-{
-    NSDictionary *objectClassInDictionary = [self t_objectClassInDictionary];
-    if (!objectClassInDictionary || !objectClassInDictionary.allKeys.count) {
-        return jsonObject;
-    }
-    
-    if (![objectClassInDictionary.allKeys containsObject:propertyName]) {
-        return jsonObject;
-    }
-    
-    id objectClass = [self t_classFromDictionary:objectClassInDictionary key:propertyName];
-    if (!objectClass) {
-        return jsonObject;
-    }
-    
-    NSDictionary *modelDict = [objectClass modelDictForJsonObejct:jsonObject];
-    return modelDict;
-}
-
-+ (NSDictionary *)modelDictForJsonObejct:(id)jsonObject
-{
-    NSMutableDictionary *modelDict = [NSMutableDictionary dictionary];
-    for (id jsonKey in ((NSDictionary *)jsonObject).allKeys) {
-        id jsonValue = [jsonObject objectForKey:jsonKey];
-        jsonValue = [jsonValue mj_JSONObject];
-        if ([jsonValue isKindOfClass:[NSDictionary class]]) {
-            jsonValue = [self modelWithJsonDict:jsonValue];
-            jsonValue = [self mj_objectWithKeyValues:jsonValue];
+        jsonValue = [subModelDict copy];
+        jsonValue = [self mj_objectWithKeyValues:jsonValue];
+        if (jsonValue) {
+            [modelArray addObject:jsonValue];
         }
-        [modelDict setObject:jsonValue forKey:jsonKey];
     }
-    return [modelDict copy];
+    
+    return [modelArray copy];
 }
 
 + (Class)t_classFromDictionary:(NSDictionary *)dictionary key:(NSString *)key
@@ -629,7 +594,16 @@
     return t_autoIncrementPropertyNames;
 }
 
-#pragma mark - 自增
+
++ (NSDictionary *)t_objectClassInArray
+{
+    NSDictionary *t_objectClassInArray = nil;
+    if ([self respondsToSelector:@selector(mj_objectClassInArray)]) {
+        t_objectClassInArray = [self performSelector:@selector(mj_objectClassInArray)];
+    }
+    return t_objectClassInArray;
+}
+
 + (NSDictionary *)t_objectClassInDictionary
 {
     NSDictionary *t_objectClassInDictionary = nil;
