@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="itA-Yd-Y7A">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,6 +9,72 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Root View Controller-->
+        <scene sceneID="SlX-uC-qL1">
+            <objects>
+                <viewController id="Pxi-gu-BaA" customClass="RootViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OqE-TR-Tn6"/>
+                        <viewControllerLayoutGuide type="bottom" id="osk-Yn-l3c"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="er5-R7-KzB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F1s-Lk-QqB">
+                                <rect key="frame" x="126" y="607" width="123" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="CmM-iU-GkG"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                <state key="normal" title="ENTER Open DB"/>
+                                <connections>
+                                    <action selector="enterOpenDB:" destination="Pxi-gu-BaA" eventType="touchUpInside" id="z4Z-nD-a5L"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="41j-aj-WLL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nyx-37-Y3E">
+                                <rect key="frame" x="5" y="69" width="128" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="EcC-oE-bKD"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                <state key="normal" title="EncryptDatabase"/>
+                                <connections>
+                                    <action selector="EncryptDatabase:" destination="Pxi-gu-BaA" eventType="touchUpInside" id="xL1-9y-crv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Koc-Yb-58u">
+                                <rect key="frame" x="5" y="114" width="145" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="IdX-SB-WfO"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                <state key="normal" title="unEncryptDatabase"/>
+                                <connections>
+                                    <action selector="unEncryptDatabase:" destination="Pxi-gu-BaA" eventType="touchUpInside" id="3tj-NJ-hcx"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Nyx-37-Y3E" firstAttribute="top" secondItem="OqE-TR-Tn6" secondAttribute="bottom" constant="5" id="77o-Eq-L9r"/>
+                            <constraint firstItem="osk-Yn-l3c" firstAttribute="top" secondItem="F1s-Lk-QqB" secondAttribute="bottom" constant="30" id="DUr-b0-kUM"/>
+                            <constraint firstItem="F1s-Lk-QqB" firstAttribute="centerX" secondItem="er5-R7-KzB" secondAttribute="centerX" id="ZXW-ts-5x4"/>
+                            <constraint firstItem="Nyx-37-Y3E" firstAttribute="leading" secondItem="er5-R7-KzB" secondAttribute="leading" constant="5" id="bGT-UJ-TQu"/>
+                            <constraint firstItem="Koc-Yb-58u" firstAttribute="top" secondItem="Nyx-37-Y3E" secondAttribute="bottom" constant="15" id="fph-Bl-Png"/>
+                            <constraint firstItem="Koc-Yb-58u" firstAttribute="leading" secondItem="Nyx-37-Y3E" secondAttribute="leading" id="t5B-RS-fNQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ymS-Fe-srX"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lX5-w0-b2Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="331" y="-127"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -22,10 +88,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rTg-sA-tUc">
-                                <rect key="frame" x="0.0" y="25" width="375" height="322"/>
+                                <rect key="frame" x="0.0" y="69" width="375" height="318"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PtF-RQ-nAJ">
-                                        <rect key="frame" x="15" y="10" width="175" height="30"/>
+                                        <rect key="frame" x="5" y="10" width="175" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="03i-sQ-zKk"/>
@@ -37,7 +103,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VcS-5b-hHg">
-                                        <rect key="frame" x="15" y="55" width="161" height="30"/>
+                                        <rect key="frame" x="5" y="55" width="161" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="SQLStudentInsertOne"/>
@@ -46,8 +112,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bDM-kY-tva">
-                                        <rect key="frame" x="191" y="55" width="182" height="30"/>
+                                        <rect key="frame" x="171" y="55" width="162" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="SQLStudentInsertFormat"/>
                                         <connections>
@@ -55,7 +122,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ik-ab-ajK">
-                                        <rect key="frame" x="15" y="100" width="168" height="30"/>
+                                        <rect key="frame" x="5" y="100" width="168" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="SQLStudentInsertMore"/>
@@ -64,7 +131,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aza-BO-Rts">
-                                        <rect key="frame" x="15" y="145" width="255" height="30"/>
+                                        <rect key="frame" x="5" y="145" width="255" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="SQLCreateTableStudentAndClasses"/>
@@ -73,7 +140,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IjO-Mg-eVr">
-                                        <rect key="frame" x="15" y="190" width="95" height="30"/>
+                                        <rect key="frame" x="5" y="190" width="95" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="SQLSchema"/>
@@ -94,9 +161,9 @@
                                     <constraint firstItem="bDM-kY-tva" firstAttribute="height" secondItem="PtF-RQ-nAJ" secondAttribute="height" id="MKr-4z-HWU"/>
                                     <constraint firstItem="bDM-kY-tva" firstAttribute="centerY" secondItem="VcS-5b-hHg" secondAttribute="centerY" id="NOM-HC-cQ5"/>
                                     <constraint firstItem="IjO-Mg-eVr" firstAttribute="leading" secondItem="PtF-RQ-nAJ" secondAttribute="leading" id="RQR-41-L35"/>
-                                    <constraint firstItem="bDM-kY-tva" firstAttribute="leading" secondItem="VcS-5b-hHg" secondAttribute="trailing" constant="15" id="azT-S3-Yef"/>
+                                    <constraint firstItem="bDM-kY-tva" firstAttribute="leading" secondItem="VcS-5b-hHg" secondAttribute="trailing" constant="5" id="azT-S3-Yef"/>
                                     <constraint firstItem="0ik-ab-ajK" firstAttribute="top" secondItem="VcS-5b-hHg" secondAttribute="bottom" constant="15" id="cwi-i3-amA"/>
-                                    <constraint firstItem="PtF-RQ-nAJ" firstAttribute="leading" secondItem="rTg-sA-tUc" secondAttribute="leading" constant="15" id="fK1-bA-66e"/>
+                                    <constraint firstItem="PtF-RQ-nAJ" firstAttribute="leading" secondItem="rTg-sA-tUc" secondAttribute="leading" constant="5" id="fK1-bA-66e"/>
                                     <constraint firstItem="PtF-RQ-nAJ" firstAttribute="top" secondItem="rTg-sA-tUc" secondAttribute="top" constant="10" id="pPs-WO-CxQ"/>
                                     <constraint firstItem="0ik-ab-ajK" firstAttribute="leading" secondItem="PtF-RQ-nAJ" secondAttribute="leading" id="tPZ-sy-GZd"/>
                                     <constraint firstItem="aza-BO-Rts" firstAttribute="height" secondItem="PtF-RQ-nAJ" secondAttribute="height" id="weR-1V-8D8"/>
@@ -104,7 +171,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7MH-Fq-wk2">
-                                <rect key="frame" x="0.0" y="347" width="375" height="320"/>
+                                <rect key="frame" x="0.0" y="387" width="375" height="280"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TnB-Tn-z4V">
                                         <rect key="frame" x="147.5" y="0.0" width="79" height="25"/>
@@ -115,7 +182,7 @@
                                         <state key="normal" title="Sql Model"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D3k-gC-hHO">
-                                        <rect key="frame" x="15" y="35" width="146" height="30"/>
+                                        <rect key="frame" x="5" y="35" width="146" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="rPS-oK-ain"/>
@@ -127,7 +194,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xRb-2M-gu4">
-                                        <rect key="frame" x="15" y="205" width="145" height="30"/>
+                                        <rect key="frame" x="5" y="205" width="145" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="ClassesCreateTable"/>
@@ -136,7 +203,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iBo-Hk-opD">
-                                        <rect key="frame" x="219" y="35" width="141" height="30"/>
+                                        <rect key="frame" x="229" y="35" width="141" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="StudentInsertTable"/>
@@ -145,7 +212,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n2L-4L-EOI">
-                                        <rect key="frame" x="15" y="75" width="155" height="30"/>
+                                        <rect key="frame" x="5" y="75" width="155" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="StudentReplaceTable"/>
@@ -154,7 +221,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xa6-BV-Zp2">
-                                        <rect key="frame" x="209" y="75" width="151" height="30"/>
+                                        <rect key="frame" x="219" y="75" width="151" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="1HO-5V-SRt"/>
@@ -166,7 +233,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wAg-7r-uzt">
-                                        <rect key="frame" x="15" y="115" width="108" height="30"/>
+                                        <rect key="frame" x="5" y="115" width="108" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="eP2-Lx-CDD"/>
@@ -178,7 +245,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0PN-7D-0uH">
-                                        <rect key="frame" x="15" y="245" width="107" height="30"/>
+                                        <rect key="frame" x="5" y="245" width="107" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="ClassesSelect"/>
@@ -187,7 +254,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dXv-Hf-FW0">
-                                        <rect key="frame" x="15" y="155" width="109" height="30"/>
+                                        <rect key="frame" x="5" y="155" width="109" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="yet-es-p6w"/>
@@ -199,7 +266,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0n-2U-Psn">
-                                        <rect key="frame" x="262" y="155" width="98" height="30"/>
+                                        <rect key="frame" x="272" y="155" width="98" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="gEO-ap-Pht"/>
@@ -211,7 +278,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JT8-mU-dhF">
-                                        <rect key="frame" x="220" y="205" width="140" height="30"/>
+                                        <rect key="frame" x="230" y="205" width="140" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="ClassesInsertTable"/>
@@ -220,7 +287,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v8h-c3-k98">
-                                        <rect key="frame" x="263" y="245" width="97" height="30"/>
+                                        <rect key="frame" x="273" y="245" width="97" height="30"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                         <state key="normal" title="ClassesDrop"/>
@@ -242,7 +309,7 @@
                                     <constraint firstItem="xRb-2M-gu4" firstAttribute="height" secondItem="D3k-gC-hHO" secondAttribute="height" id="GTk-Jt-YGJ"/>
                                     <constraint firstItem="xa6-BV-Zp2" firstAttribute="top" secondItem="iBo-Hk-opD" secondAttribute="bottom" constant="10" id="Kpf-qa-xYJ"/>
                                     <constraint firstItem="D3k-gC-hHO" firstAttribute="top" secondItem="TnB-Tn-z4V" secondAttribute="bottom" constant="10" id="L8b-R2-4a8"/>
-                                    <constraint firstAttribute="height" constant="320" id="LiN-B8-b4B"/>
+                                    <constraint firstAttribute="height" constant="280" id="LiN-B8-b4B"/>
                                     <constraint firstItem="TnB-Tn-z4V" firstAttribute="centerX" secondItem="7MH-Fq-wk2" secondAttribute="centerX" id="MKl-we-pSN"/>
                                     <constraint firstItem="n2L-4L-EOI" firstAttribute="leading" secondItem="D3k-gC-hHO" secondAttribute="leading" id="Ppj-WQ-MdL"/>
                                     <constraint firstItem="0PN-7D-0uH" firstAttribute="leading" secondItem="D3k-gC-hHO" secondAttribute="leading" id="Q6G-3h-hXd"/>
@@ -253,12 +320,12 @@
                                     <constraint firstItem="n2L-4L-EOI" firstAttribute="height" secondItem="D3k-gC-hHO" secondAttribute="height" id="d6a-Zv-AO2"/>
                                     <constraint firstItem="JT8-mU-dhF" firstAttribute="height" secondItem="D3k-gC-hHO" secondAttribute="height" id="eWv-kx-thV"/>
                                     <constraint firstItem="xRb-2M-gu4" firstAttribute="leading" secondItem="D3k-gC-hHO" secondAttribute="leading" id="fnl-ww-p34"/>
-                                    <constraint firstAttribute="trailing" secondItem="iBo-Hk-opD" secondAttribute="trailing" constant="15" id="jlr-xL-TNB"/>
+                                    <constraint firstAttribute="trailing" secondItem="iBo-Hk-opD" secondAttribute="trailing" constant="5" id="jlr-xL-TNB"/>
                                     <constraint firstItem="dXv-Hf-FW0" firstAttribute="top" secondItem="wAg-7r-uzt" secondAttribute="bottom" constant="10" id="ksp-lH-Orf"/>
                                     <constraint firstItem="v8h-c3-k98" firstAttribute="centerY" secondItem="0PN-7D-0uH" secondAttribute="centerY" id="oCa-TZ-CeK"/>
                                     <constraint firstItem="b0n-2U-Psn" firstAttribute="centerY" secondItem="dXv-Hf-FW0" secondAttribute="centerY" id="pcZ-Gg-1kw"/>
                                     <constraint firstItem="v8h-c3-k98" firstAttribute="top" secondItem="JT8-mU-dhF" secondAttribute="bottom" constant="10" id="s8X-yE-vQh"/>
-                                    <constraint firstItem="D3k-gC-hHO" firstAttribute="leading" secondItem="7MH-Fq-wk2" secondAttribute="leading" constant="15" id="sDO-oA-RZL"/>
+                                    <constraint firstItem="D3k-gC-hHO" firstAttribute="leading" secondItem="7MH-Fq-wk2" secondAttribute="leading" constant="5" id="sDO-oA-RZL"/>
                                     <constraint firstItem="xRb-2M-gu4" firstAttribute="top" secondItem="dXv-Hf-FW0" secondAttribute="bottom" constant="20" id="sjq-NP-qFW"/>
                                     <constraint firstItem="wAg-7r-uzt" firstAttribute="leading" secondItem="D3k-gC-hHO" secondAttribute="leading" id="yLv-lI-3BY"/>
                                     <constraint firstItem="iBo-Hk-opD" firstAttribute="height" secondItem="D3k-gC-hHO" secondAttribute="height" id="yn8-az-bEd"/>
@@ -280,7 +347,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="32.799999999999997" y="71.514242878560722"/>
+            <point key="canvasLocation" x="330" y="576"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Rd8-RL-pKr">
+            <objects>
+                <navigationController id="itA-Yd-Y7A" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2YF-of-WbN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Pxi-gu-BaA" kind="relationship" relationship="rootViewController" id="pPh-ZL-MDz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AiW-eK-tnT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-428" y="233"/>
         </scene>
     </scenes>
 </document>

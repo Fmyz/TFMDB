@@ -36,6 +36,10 @@
 
     NSArray *primaryKeyPropertyNames = [self t_primaryKeyPropertyNames];
     NSArray *autoIncrementPropertyNames = [self t_autoIncrementPropertyNames];
+    NSArray *notNullPropertyNames = [self t_notNullPropertyNames];
+    NSDictionary *defaultPropertyNamesAndValues = [self t_defaultPropertyNamesAndValues];
+    NSArray *uniquePropertyNames = [self t_uniquePropertyNames];
+    NSDictionary *checkPropertyNamesAndConditions = [self t_checkPropertyNamesAndConditions];
     
     NSMutableArray<NSString *> *columns = [NSMutableArray array];
     
@@ -62,6 +66,28 @@
         if ([autoIncrementPropertyNames containsObject:name]) {
             column = [column stringByAppendingString:@" "];
             column = [column stringByAppendingString:tSql_Attribute_AutoIncrement];
+        }
+        
+        if ([notNullPropertyNames containsObject:name]) {
+            column = [column stringByAppendingString:@" "];
+            column = [column stringByAppendingString:tSql_Attribute_NotNull];
+        }
+        
+        if ([defaultPropertyNamesAndValues.allKeys containsObject:name]) {
+            id dValue = [defaultPropertyNamesAndValues objectForKey:name];
+            column = [column stringByAppendingString:@" "];
+            column = [column stringByAppendingFormat:@"%@ %@", tSql_Attribute_Default, dValue];
+        }
+        
+        if ([uniquePropertyNames containsObject:name]) {
+            column = [column stringByAppendingString:@" "];
+            column = [column stringByAppendingString:tSql_Attribute_Unique];
+        }
+        
+        if ([checkPropertyNamesAndConditions.allKeys containsObject:name]) {
+            id condition = [checkPropertyNamesAndConditions objectForKey:name];
+            column = [column stringByAppendingString:@" "];
+            column = [column stringByAppendingFormat:@"%@(%@)", tSql_Attribute_Check, condition];
         }
         
         [columns addObject:column];
@@ -190,6 +216,7 @@
         if (value && ![value isKindOfClass:[NSNull class]]) {
             if ([sqlType isEqualToString:tSql_Type_Text]) {
                 value = [modelClass jsonWithValue:value];
+                value = [value mj_JSONString];
                 value = [NSString stringWithFormat:@"'%@'", (NSString *)value];
             }
             [keyValuesArr addObject:[NSString stringWithFormat:@"%@ = %@", key, value]];
@@ -270,8 +297,8 @@
 {
     __block NSMutableArray<MJProperty *> *propertys = [NSMutableArray array];
     
-    NSArray *allowedPropertyNames = [self mj_totalAllowedPropertyNames];
-    NSArray *ignoredPropertyNames = [self mj_totalIgnoredPropertyNames];
+    NSArray *allowedPropertyNames = [self t_allowedPropertyNames];
+    NSArray *ignoredPropertyNames = [self t_ignoredPropertyNames];
     [self mj_enumerateProperties:^(MJProperty *property, BOOL *stop) {
         // 检测是否被忽略
         if (allowedPropertyNames.count && ![allowedPropertyNames containsObject:property.name]) return;
@@ -287,8 +314,8 @@
 {
     NSMutableArray<NSString *> *ivarNames = [NSMutableArray array];
     
-    NSArray *allowedPropertyNames = [self mj_totalAllowedPropertyNames];
-    NSArray *ignoredPropertyNames = [self mj_totalIgnoredPropertyNames];
+    NSArray *allowedPropertyNames = [self t_allowedPropertyNames];
+    NSArray *ignoredPropertyNames = [self t_ignoredPropertyNames];
     
     unsigned int count;
     Ivar *ivar = class_copyIvarList(self, &count);
@@ -345,55 +372,14 @@
     return sql;
 }
 
+///字典转模型
 + (id)modelForKeyValue:(NSDictionary *)keyValues
 {
     id model = [self mj_objectWithKeyValues:keyValues];
     return model;
 }
 
-+ (NSString *)jsonWithValue:(id)value
-{
-    if ([value isKindOfClass:[NSDictionary class]]) {
-        NSMutableDictionary *mValue = [NSMutableDictionary dictionaryWithDictionary:value];
-        NSArray *subKeys = [mValue allKeys];
-        for (id subKey in subKeys) {
-            id subValue = [value objectForKey:subKey];
-            
-            id keyValues = [subValue mj_keyValues];
-            if ([keyValues isKindOfClass:[NSDictionary class]]) {
-                subValue = [self jsonWithValue:keyValues];
-            }
-            subValue = [self jsonWithValue:subValue];
-            [mValue setObject:subValue forKey:subKey];
-        }
-        
-        if (mValue) {
-            value = [mValue copy];
-        }
-    } else if ([value isKindOfClass:[NSArray class]]) {
-        NSMutableArray *mValue = [NSMutableArray arrayWithArray:value];
-        for (id object in value) {
-            id newObject = object;
-            id keyValues = [object mj_keyValues];
-            if ([keyValues isKindOfClass:[NSDictionary class]]) {
-                newObject = [self jsonWithValue:keyValues];
-            }
-            id jsonObject = [self jsonWithValue:newObject];
-            NSInteger index = [value indexOfObject:object];
-            [mValue replaceObjectAtIndex:index withObject:jsonObject];
-        }
-        if (mValue) {
-            value = [mValue copy];
-        }
-    } else {
-        if ([value isKindOfClass:[NSNumber class]]) {
-            value = ((NSNumber *)value).stringValue;
-        }
-        value = [value mj_JSONString];
-    }
-    return value;
-}
-
+///根据表列名(全小写)转换属性名
 + (NSString *)propertyNameWithDBKey:(NSString *)dbKey
 {
     NSArray<MJProperty *> *propertys = [self getClassMJPropertys];
@@ -406,7 +392,7 @@
         return dbKey;
     }
     NSInteger count = MIN(propertys.count, ivarNames.count);
-
+    
     NSString *propertyName = dbKey;
     for (NSInteger index = 0; index < count; index++) {
         MJProperty *property = [propertys objectAtIndex:index];
@@ -420,11 +406,12 @@
         }
         propertyName = property.name;
         break;
-
+        
     }
     return propertyName;
 }
 
+///转换表数据的值
 + (id)propertyName:(NSString *)propertyName valueCheckIsDictionaryOrArray:(id)value
 {
     NSDictionary *objectClassInDictionary = [self t_objectClassInDictionary];
@@ -490,6 +477,49 @@
     }
     
     return jsonObject;
+}
+
++ (NSString *)jsonWithValue:(id)value
+{
+    if ([value isKindOfClass:[NSDictionary class]]) {
+        NSMutableDictionary *mValue = [NSMutableDictionary dictionaryWithDictionary:value];
+        NSArray *subKeys = [mValue allKeys];
+        for (id subKey in subKeys) {
+            id subValue = [value objectForKey:subKey];
+            
+            id keyValues = [subValue mj_keyValues];
+            if ([keyValues isKindOfClass:[NSDictionary class]]) {
+                subValue = [self jsonWithValue:keyValues];
+            }
+            subValue = [self jsonWithValue:subValue];
+            [mValue setObject:subValue forKey:subKey];
+        }
+        
+        if (mValue) {
+            value = [mValue copy];
+        }
+    } else if ([value isKindOfClass:[NSArray class]]) {
+        NSMutableArray *mValue = [NSMutableArray arrayWithArray:value];
+        for (id object in value) {
+            id newObject = object;
+            id keyValues = [object mj_keyValues];
+            if ([keyValues isKindOfClass:[NSDictionary class]]) {
+                newObject = [self jsonWithValue:keyValues];
+            }
+            id jsonObject = [self jsonWithValue:newObject];
+            NSInteger index = [value indexOfObject:object];
+            [mValue replaceObjectAtIndex:index withObject:jsonObject];
+        }
+        if (mValue) {
+            value = [mValue copy];
+        }
+    } else {
+        if ([value isKindOfClass:[NSNumber class]]) {
+            value = ((NSNumber *)value).stringValue;
+        }
+        value = [value mj_JSONString];
+    }
+    return value;
 }
 
 + (id)modelObjectForJsonDictionaryObejct:(id)jsonObject
@@ -563,7 +593,20 @@
     return objectClass;
 }
 
-#pragma mark - 表名
++ (NSString *)replaceFirstUnderline:(NSString *)ivarName
+{
+    // 若此变量未在类结构体中声明而只声明为Property，则变量名加前缀 '_'下划线
+    // 比如 @property(retain) NSString *abc;则 key == _abc;
+    NSString *propertyName = ivarName;
+    
+    NSString *firstStr = [ivarName substringToIndex:1];
+    if ([firstStr isEqualToString:@"_"]) {
+        propertyName = [ivarName stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@""];
+    }
+    
+    return propertyName;
+}
+
 + (NSString *)t_tableName
 {
     NSString *t_tableName = nil;
@@ -573,7 +616,6 @@
     return t_tableName;
 }
 
-#pragma mark - 主键
 + (NSArray *)t_primaryKeyPropertyNames
 {
     NSArray *t_primaryKeyPropertyNames = nil;
@@ -583,8 +625,6 @@
     return t_primaryKeyPropertyNames;
 }
 
-
-#pragma mark - 自增
 + (NSArray *)t_autoIncrementPropertyNames
 {
     NSArray *t_autoIncrementPropertyNames = nil;
@@ -594,11 +634,51 @@
     return t_autoIncrementPropertyNames;
 }
 
++ (NSArray *)t_notNullPropertyNames
+{
+    NSArray *t_notNullPropertyNames = nil;
+    if ([self respondsToSelector:@selector(t_dbModelNotNullPropertyNames)]) {
+        t_notNullPropertyNames = [self performSelector:@selector(t_dbModelNotNullPropertyNames)];
+    }
+    return t_notNullPropertyNames;
+}
+
++ (NSDictionary *)t_defaultPropertyNamesAndValues
+{
+    NSDictionary *t_defaultPropertyNamesAndValues = nil;
+    
+    if ([self respondsToSelector:@selector(t_dbModelDefaultPropertyNamesAndValues)]) {
+        t_defaultPropertyNamesAndValues = [self performSelector:@selector(t_dbModelDefaultPropertyNamesAndValues)];
+    }
+    return t_defaultPropertyNamesAndValues;
+}
+
++ (NSArray *)t_uniquePropertyNames
+{
+    NSArray *t_uniquePropertyNames = nil;
+    if ([self respondsToSelector:@selector(t_dbModelUniquePropertyNames)]) {
+        t_uniquePropertyNames = [self performSelector:@selector(t_dbModelUniquePropertyNames)];
+    }
+    return t_uniquePropertyNames;
+}
+
++ (NSDictionary *)t_checkPropertyNamesAndConditions
+{
+    NSDictionary *t_checkPropertyNamesAndConditions = nil;
+    
+    if ([self respondsToSelector:@selector(t_dbModelCheckPropertyNamesAndConditions)]) {
+        t_checkPropertyNamesAndConditions = [self performSelector:@selector(t_dbModelCheckPropertyNamesAndConditions)];
+    }
+    return t_checkPropertyNamesAndConditions;
+}
 
 + (NSDictionary *)t_objectClassInArray
 {
     NSDictionary *t_objectClassInArray = nil;
-    if ([self respondsToSelector:@selector(mj_objectClassInArray)]) {
+    
+    if ([self respondsToSelector:@selector(t_dbModelObjectClassInArray)]) {
+        t_objectClassInArray = [self performSelector:@selector(t_dbModelObjectClassInArray)];
+    } else if ([self respondsToSelector:@selector(mj_objectClassInArray)]) {
         t_objectClassInArray = [self performSelector:@selector(mj_objectClassInArray)];
     }
     return t_objectClassInArray;
@@ -613,18 +693,26 @@
     return t_objectClassInDictionary;
 }
 
-+ (NSString *)replaceFirstUnderline:(NSString *)ivarName
++ (NSArray *)t_allowedPropertyNames
 {
-    // 若此变量未在类结构体中声明而只声明为Property，则变量名加前缀 '_'下划线
-    // 比如 @property(retain) NSString *abc;则 key == _abc;
-    NSString *propertyName = ivarName;
-    
-    NSString *firstStr = [ivarName substringToIndex:1];
-    if ([firstStr isEqualToString:@"_"]) {
-        propertyName = [ivarName stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@""];
+    NSArray *t_allowedPropertyNames = nil;
+    if ([self respondsToSelector:@selector(t_dbModelAllowedPropertyNames)]) {
+        t_allowedPropertyNames = [self performSelector:@selector(t_dbModelAllowedPropertyNames)];
+    } else if ([self respondsToSelector:@selector(mj_allowedPropertyNames)]) {
+        t_allowedPropertyNames = [self performSelector:@selector(mj_allowedPropertyNames)];
     }
-    
-    return propertyName;
+    return t_allowedPropertyNames;
+}
+
++ (NSArray *)t_ignoredPropertyNames
+{
+    NSArray *t_ignoredPropertyNames = nil;
+    if ([self respondsToSelector:@selector(t_dbModelIgnoredPropertyNames)]) {
+        t_ignoredPropertyNames = [self performSelector:@selector(t_dbModelIgnoredPropertyNames)];
+    } else if ([self respondsToSelector:@selector(mj_ignoredPropertyNames)]) {
+        t_ignoredPropertyNames = [self performSelector:@selector(mj_ignoredPropertyNames)];
+    }
+    return t_ignoredPropertyNames;
 }
 
 @end

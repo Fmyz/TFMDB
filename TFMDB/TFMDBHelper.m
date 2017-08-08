@@ -322,16 +322,28 @@
             NSString *name = [rs stringForColumn:@"name"];
             NSString *type = [rs stringForColumn:@"type"];
             BOOL pk = [[rs objectForColumn:@"pk"] boolValue];
+            BOOL notnull = [[rs objectForColumn:@"notnull"] boolValue];
+            id dflt_value = [rs objectForColumn:@"dflt_value"];
+            
+            NSMutableArray *attrs = [NSMutableArray arrayWithObjects:name, type, nil];
             if (pk) {
                 NSString *pkStr = @"PRIMARY KEY";
-                NSArray *attrs = [NSArray arrayWithObjects:name, type, pkStr, nil];
-                NSString *attrStr = [attrs componentsJoinedByString:@" "];
-                [attrStrs addObject:attrStr];
-            } else {
-                NSArray *attrs = [NSArray arrayWithObjects:name, type, nil];
-                NSString *attrStr = [attrs componentsJoinedByString:@" "];
-                [attrStrs addObject:attrStr];
+                [attrs addObject:pkStr];
             }
+            if (notnull) {
+                NSString *notnullStr = @"NOT NULL";
+                [attrs addObject:notnullStr];
+            }
+            if (dflt_value && ![dflt_value isKindOfClass:[NSNull class]]) {
+                if ([dflt_value isKindOfClass:[NSNumber class]]) {
+                    dflt_value = ((NSNumber *)dflt_value).stringValue;
+                }
+                NSString *defaultStr = [NSString stringWithFormat:@"DEFAULT %@", dflt_value];
+                [attrs addObject:defaultStr];
+            }
+            
+            NSString *attrStr = [attrs componentsJoinedByString:@" "];
+            [attrStrs addObject:attrStr];
         }
         [rs close];
         

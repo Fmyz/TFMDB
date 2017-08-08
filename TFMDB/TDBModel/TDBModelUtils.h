@@ -16,11 +16,12 @@ static NSString *const tSql_Type_Float = @"FLOAT";
 static NSString *const tSql_Type_Double = @"DOUBLE";
 static NSString *const tSql_Type_Blob = @"BLOB";
 
-static NSString *const tSql_Attribute_NotNull = @"NOT NULL";
 static NSString *const tSql_Attribute_PrimaryKey = @"PRIMARY KEY";
+static NSString *const tSql_Attribute_AutoIncrement = @"AUTOINCREMENT"; //这个好像只能拼接在PRIMARY KEY 后面
+static NSString *const tSql_Attribute_NotNull = @"NOT NULL";
 static NSString *const tSql_Attribute_Default = @"DEFAULT";
-static NSString *const tSql_Attribute_AutoIncrement = @"AUTOINCREMENT";
 static NSString *const tSql_Attribute_Unique = @"UNIQUE";
+static NSString *const tSql_Attribute_Check = @"CHECK";
 
 static NSString *const tSql_Condition_Where = @"WHERE";
 static NSString *const tSql_Condition_OrderBy = @"ORDER BY";

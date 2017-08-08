@@ -27,6 +27,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     _helper = [TestDBHelper helperInstance];
+    
+    self.title = @"DB SQL";
 }
 
 - (IBAction)SQLCreateTableStudent:(id)sender {

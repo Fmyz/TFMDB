@@ -25,6 +25,7 @@
 		5A124E0F1F25088600C4CECB /* Classes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A124E0E1F25088600C4CECB /* Classes.m */; };
 		6834BC771F2B47D8003096AF /* NSObject+TDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6834BC761F2B47D8003096AF /* NSObject+TDBModel.m */; };
 		6834BC7A1F2B488E003096AF /* TFMDBHelper+TDBModelExecute.m in Sources */ = {isa = PBXBuildFile; fileRef = 6834BC791F2B488E003096AF /* TFMDBHelper+TDBModelExecute.m */; };
+		68BC05E01F39BB6C008ADA1A /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BC05DF1F39BB6C008ADA1A /* RootViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,9 @@
 		6834BC781F2B488E003096AF /* TFMDBHelper+TDBModelExecute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TFMDBHelper+TDBModelExecute.h"; sourceTree = "<group>"; };
 		6834BC791F2B488E003096AF /* TFMDBHelper+TDBModelExecute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TFMDBHelper+TDBModelExecute.m"; sourceTree = "<group>"; };
 		68424E391F29C12900FF6213 /* TDBModelUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBModelUtils.h; sourceTree = "<group>"; };
+		6880D8611F3862BC00E50563 /* TDBModelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBModelDelegate.h; sourceTree = "<group>"; };
+		68BC05DE1F39BB6C008ADA1A /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		68BC05DF1F39BB6C008ADA1A /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		82FB2889DB0D2DF6D1D5994F /* Pods-TFMDBDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFMDBDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFMDBDemo/Pods-TFMDBDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,6 +143,8 @@
 				5A124DF51F24FCDC00C4CECB /* TFMDB */,
 				5A124DC51F24FA2400C4CECB /* AppDelegate.h */,
 				5A124DC61F24FA2400C4CECB /* AppDelegate.m */,
+				68BC05DE1F39BB6C008ADA1A /* RootViewController.h */,
+				68BC05DF1F39BB6C008ADA1A /* RootViewController.m */,
 				5A124DC81F24FA2400C4CECB /* ViewController.h */,
 				5A124DC91F24FA2400C4CECB /* ViewController.m */,
 				5A124E061F25048200C4CECB /* testModel */,
@@ -214,6 +220,7 @@
 				6834BC791F2B488E003096AF /* TFMDBHelper+TDBModelExecute.m */,
 				6834BC751F2B47D8003096AF /* NSObject+TDBModel.h */,
 				6834BC761F2B47D8003096AF /* NSObject+TDBModel.m */,
+				6880D8611F3862BC00E50563 /* TDBModelDelegate.h */,
 				68424E391F29C12900FF6213 /* TDBModelUtils.h */,
 			);
 			path = TDBModel;
@@ -430,6 +437,7 @@
 				5A124DC71F24FA2400C4CECB /* AppDelegate.m in Sources */,
 				5A124E021F24FCDC00C4CECB /* TFMDBHelper+SQLCipher.m in Sources */,
 				5A124E0C1F25087300C4CECB /* Student.m in Sources */,
+				68BC05E01F39BB6C008ADA1A /* RootViewController.m in Sources */,
 				5A124DC41F24FA2400C4CECB /* main.m in Sources */,
 				5A124E031F24FCDC00C4CECB /* TFMDBHelper.m in Sources */,
 			);
