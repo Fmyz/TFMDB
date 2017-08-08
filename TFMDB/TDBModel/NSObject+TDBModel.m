@@ -8,6 +8,7 @@
 
 #import "NSObject+TDBModel.h"
 #import "TDBModelUtils.h"
+#import "MJExtension.h"
 
 @implementation NSObject (TDBModel)
 
